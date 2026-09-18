@@ -1,11 +1,7 @@
 "use client";
 
-import {
-  motion,
-  MotionValue,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 const SOCIALS = [
   { label: "GitHub", href: "#" },
@@ -29,21 +25,40 @@ const fadeUp = {
   },
 };
 
-type HeroProps = {
-  isLoaded: boolean;
-  scrollYProgress?: MotionValue<number>;
+const fadeIn = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 
-export default function Hero({ isLoaded, scrollYProgress }: HeroProps) {
-  const staticProgress = useMotionValue(0);
-  const heroProgress = scrollYProgress ?? staticProgress;
-  const imageY = useTransform(heroProgress, [0, 0.4], [0, -88]);
-  const contentY = useTransform(heroProgress, [0, 0.4], [0, -120]);
+type HeroProps = {
+  isLoaded: boolean;
+};
+
+export default function Hero({ isLoaded }: HeroProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 24,
+    mass: 0.5,
+  });
+
+  const imageY = useTransform(smoothProgress, [0, 0.4], [0, -140]);
+  const contentY = useTransform(smoothProgress, [0, 0.4], [0, -180]);
 
   return (
     <main className="min-h-svh overflow-y-auto bg-white text-black sm:h-svh sm:overflow-hidden">
       {/* ---------- Desktop  ---------- */}
       <motion.section
+        ref={sectionRef}
         variants={container}
         initial="hidden"
         animate={isLoaded ? "show" : "hidden"}
@@ -62,11 +77,11 @@ export default function Hero({ isLoaded, scrollYProgress }: HeroProps) {
         </motion.h1>
 
         <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+          initial={{ opacity: 0 }}
+          animate={isLoaded ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
-          style={{ y: imageY }}
-          className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-[52svh] w-auto -translate-x-1/2 sm:h-[64svh]"
+          style={{ translateY: imageY }}
+          className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-[52svh] w-auto -translate-x-1/2 sm:h-[64svh] will-change-transform"
         >
           <img
             src="/images/harfool-gurjar.png"
@@ -77,9 +92,9 @@ export default function Hero({ isLoaded, scrollYProgress }: HeroProps) {
 
         <div className="absolute inset-x-0 bottom-0 z-20 flex items-end justify-between gap-6 p-5 sm:p-10">
           <motion.div
-            variants={fadeUp}
-            style={{ y: contentY }}
-            className="max-w-sm"
+            variants={fadeIn}
+            style={{ translateY: contentY }}
+            className="max-w-sm will-change-transform"
           >
             <h2 className="text-xl font-bold sm:text-3xl">
               Founder and software engineer
@@ -96,9 +111,9 @@ export default function Hero({ isLoaded, scrollYProgress }: HeroProps) {
           </motion.div>
 
           <motion.div
-            variants={fadeUp}
-            style={{ y: contentY }}
-            className="hidden flex-col gap-3 sm:flex"
+            variants={fadeIn}
+            style={{ translateY: contentY }}
+            className="hidden flex-col gap-3 sm:flex will-change-transform"
           >
             {SOCIALS.map((s) => (
               <a

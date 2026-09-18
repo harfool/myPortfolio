@@ -3,6 +3,7 @@ import { IBM_Plex_Mono } from "next/font/google";
 import { Archivo } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -29,10 +30,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${ibmPlexMono.variable} ${archivo.variable} h-full antialiased`}
     >
-      <body className="flex min-h-screen flex-col bg-white font-sans text-black">
-        <Header />
-        {children}
-        <Footer />
+      <body className="flex min-h-screen flex-col bg-white font-sans text-black selection:bg-black selection:text-white">
+        <SmoothScroll>
+          <Header />
+          {children}
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );
