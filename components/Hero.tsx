@@ -24,14 +24,18 @@ const fadeUp = {
   },
 };
 
-export default function Hero() {
+type HeroProps = {
+  isLoaded: boolean;
+};
+
+export default function Hero({ isLoaded }: HeroProps) {
   return (
     <main className="min-h-svh overflow-y-auto bg-white text-black sm:h-svh sm:overflow-hidden">
       {/* ---------- Desktop  ---------- */}
       <motion.section
         variants={container}
         initial="hidden"
-        animate="show"
+        animate={isLoaded ? "show" : "hidden"}
         className="relative hidden h-full w-full lg:block"
       >
         <motion.h1
@@ -48,7 +52,7 @@ export default function Hero() {
 
         <motion.div
           initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
           className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-[52svh] w-auto -translate-x-1/2 sm:h-[64svh]"
         >
@@ -96,7 +100,7 @@ export default function Hero() {
       <motion.section
         variants={container}
         initial="hidden"
-        animate="show"
+        animate={isLoaded ? "show" : "hidden"}
         className="flex flex-col lg:hidden h-screen justify-between pt-24"
       >
         <motion.h1
@@ -141,7 +145,7 @@ export default function Hero() {
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           className="mt-3 flex justify-center px-8"
         >

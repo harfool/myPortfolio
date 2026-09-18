@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <>
       <AnimatePresence>{isLoading && <Loader />}</AnimatePresence>
-      <Hero />
+      <Hero isLoaded={!isLoading} />
     </>
   );
 }
