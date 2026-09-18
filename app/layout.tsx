@@ -27,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${ibmPlexMono.variable} ${archivo.variable} antialiased h-full antialiased`}
+      className={`${ibmPlexMono.variable} ${archivo.variable} h-full antialiased`}
     >
       <body className="flex min-h-screen flex-col bg-white font-sans text-black">
         <Header />
