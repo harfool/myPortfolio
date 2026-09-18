@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
+import About from "@/components/About";
 import Loader from "@/components/Loader";
 
 export default function Home() {
@@ -29,6 +30,7 @@ export default function Home() {
     <>
       <Loader isLoading={isLoading} />
       <Hero isLoaded={!isLoading} />
+      <About />
     </>
   );
 }
