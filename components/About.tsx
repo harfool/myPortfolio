@@ -39,7 +39,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="border-t border-black/10 bg-white px-6 py-20 text-black sm:px-10 lg:px-16 lg:py-28"
+      className=" bg-white px-6 py-20 text-black sm:px-10 lg:px-16 lg:py-28"
     >
       <motion.div
         variants={container}

@@ -1,6 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import {
+  motion,
+  MotionValue,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
 
 const SOCIALS = [
   { label: "GitHub", href: "#" },
@@ -26,9 +31,15 @@ const fadeUp = {
 
 type HeroProps = {
   isLoaded: boolean;
+  scrollYProgress?: MotionValue<number>;
 };
 
-export default function Hero({ isLoaded }: HeroProps) {
+export default function Hero({ isLoaded, scrollYProgress }: HeroProps) {
+  const staticProgress = useMotionValue(0);
+  const heroProgress = scrollYProgress ?? staticProgress;
+  const imageY = useTransform(heroProgress, [0, 0.4], [0, -88]);
+  const contentY = useTransform(heroProgress, [0, 0.4], [0, -120]);
+
   return (
     <main className="min-h-svh overflow-y-auto bg-white text-black sm:h-svh sm:overflow-hidden">
       {/* ---------- Desktop  ---------- */}
@@ -54,6 +65,7 @@ export default function Hero({ isLoaded }: HeroProps) {
           initial={{ opacity: 0, y: 60 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
+          style={{ y: imageY }}
           className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-[52svh] w-auto -translate-x-1/2 sm:h-[64svh]"
         >
           <img
@@ -64,7 +76,11 @@ export default function Hero({ isLoaded }: HeroProps) {
         </motion.div>
 
         <div className="absolute inset-x-0 bottom-0 z-20 flex items-end justify-between gap-6 p-5 sm:p-10">
-          <motion.div variants={fadeUp} className="max-w-sm">
+          <motion.div
+            variants={fadeUp}
+            style={{ y: contentY }}
+            className="max-w-sm"
+          >
             <h2 className="text-xl font-bold sm:text-3xl">
               Founder and software engineer
             </h2>
@@ -81,6 +97,7 @@ export default function Hero({ isLoaded }: HeroProps) {
 
           <motion.div
             variants={fadeUp}
+            style={{ y: contentY }}
             className="hidden flex-col gap-3 sm:flex"
           >
             {SOCIALS.map((s) => (
