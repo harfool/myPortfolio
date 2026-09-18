@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_LINKS = [
+  { label: "About" },
   { label: "Work", count: 24 },
   { label: "Service", count: 4 },
   { label: "Experience", count: "5+" },
+  { label: "Contact" },
 ];
 
 export default function Header() {
@@ -52,14 +54,13 @@ export default function Header() {
               className="flex items-center gap-1 transition hover:text-black"
             >
               {link.label}
-              <span className="font-mono text-xs text-black/40">
-                [{link.count}]
-              </span>
+              {link.count && (
+                <span className="font-mono text-xs text-black/40">
+                  [{link.count}]
+                </span>
+              )}
             </a>
           ))}
-          <a href="#contact" className="transition hover:text-black">
-            Contact
-          </a>
         </div>
 
         <div className="flex items-center gap-2">
@@ -108,18 +109,13 @@ export default function Header() {
                   className="flex items-center justify-between border-b border-black/5 py-3 text-sm font-medium text-black/70 transition hover:text-black"
                 >
                   {link.label}
-                  <span className="font-mono text-xs text-black/40">
-                    [{link.count}]
-                  </span>
+                  {link.count && (
+                    <span className="font-mono text-xs text-black/40">
+                      [{link.count}]
+                    </span>
+                  )}
                 </a>
               ))}
-              <a
-                href="#contact"
-                onClick={() => setOpen(false)}
-                className="py-3 text-sm font-medium text-black/70 transition hover:text-black"
-              >
-                Contact
-              </a>
             </div>
           </motion.div>
         )}
