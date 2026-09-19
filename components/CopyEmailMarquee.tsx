@@ -43,7 +43,7 @@ export default function CopyEmailMarquee() {
       type="button"
       onClick={handleCopy}
       aria-label="Copy email address"
-      className="group relative flex w-full items-center overflow-hidden cursor-pointer my-10 lg:my-20 text-left "
+      className="group relative flex w-full items-center overflow-hidden cursor-pointer my-10 lg:mt-10 lg:mb-20 text-left "
     >
       <div className="animate-marquee flex w-max shrink-0 items-center whitespace-nowrap will-change-transform">
         {content}

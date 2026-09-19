@@ -1,12 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion, AnimatePresence, useScroll } from "framer-motion";
 import Image from "next/image";
 
 const PROJECTS = [
@@ -46,7 +41,7 @@ export default function Work() {
   return (
     <section
       id="work"
-      className="scroll-mt-20 bg-white px-6 py-10 lg:pt-4 lg:pb-0 -mb-20 text-black sm:px-10 lg:px-16"
+      className="scroll-mt-20 bg-white px-6 py-10 text-black sm:px-10 lg:px-16 lg:pt-4"
     >
       <div className="mx-auto max-w-6xl">
         <motion.div
@@ -75,43 +70,34 @@ export default function Work() {
         </motion.h2>
       </div>
 
-      <div className="mx-auto max-w-6xl">
+      {/* Desktop — scroll-driven sticky media + flowing text */}
+      <div className="mx-auto hidden max-w-6xl lg:block">
         <ScrollytellingWork />
+      </div>
+
+      {/* Mobile / tablet */}
+      <div className="mx-auto mt-12 flex max-w-6xl flex-col gap-14 pb-4 lg:hidden">
+        {PROJECTS.map((project) => (
+          <MobileProjectCard key={project.title} project={project} />
+        ))}
       </div>
     </section>
   );
 }
 
 function ScrollytellingWork() {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const [segmentProgress, setSegmentProgress] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (v) => {
-      const total = PROJECTS.length;
-      const raw = v * total;
-      const idx = Math.min(Math.floor(raw), total - 1);
-      setActive(idx);
-      setSegmentProgress(raw - idx);
-    });
-    return unsubscribe;
-  }, [scrollYProgress]);
 
   const activeProject = PROJECTS[active];
 
   return (
-    <div ref={containerRef} className="relative mt-16">
-      <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 ">
+    <div className="relative mt-16">
+      <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         {/* Sticky media panel */}
-        <div className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center lg:-mt-50">
+        <div className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center">
           <div className="w-full">
-            <div className="relative aspect-4/3 w-full overflow-hidden rounded-[1.75rem] shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.75rem] shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
               <AnimatePresence>
                 <motion.div
                   key={activeProject.title}
@@ -141,7 +127,7 @@ function ScrollytellingWork() {
               <div className="h-[3px] w-full overflow-hidden rounded-full bg-black/10">
                 <motion.div
                   style={{ scaleX: segmentProgress, transformOrigin: "left" }}
-                  className="h-full w-full rounded-full bg-black/20"
+                  className="h-full w-full rounded-full bg-black"
                 />
               </div>
             </div>
@@ -155,6 +141,10 @@ function ScrollytellingWork() {
               key={project.title}
               project={project}
               isActive={i === active}
+              onProgress={(p) => {
+                setActive(i);
+                setSegmentProgress(p);
+              }}
             />
           ))}
         </div>
@@ -166,17 +156,38 @@ function ScrollytellingWork() {
 function TextBlock({
   project,
   isActive,
+  onProgress,
 }: {
   project: (typeof PROJECTS)[number];
   isActive: boolean;
+  onProgress: (progress: number) => void;
 }) {
+  const blockRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: blockRef,
+    offset: ["start center", "end center"],
+  });
+
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (v) => {
+      // Only claim "active" while this block is actually the one
+      // straddling the center trigger point (0 < v < 1).
+      if (v > 0 && v < 1) {
+        onProgress(Math.min(Math.max(v, 0), 1));
+      }
+    });
+    return unsubscribe;
+  }, [scrollYProgress, onProgress]);
+
   return (
     <motion.div
+      ref={blockRef}
       animate={{ opacity: isActive ? 1 : 0.35 }}
       transition={{ duration: 0.4 }}
-      className="flex min-h-[70vh] flex-col justify-center py-10 lg:min-h-[90vh]"
+      className="flex min-h-[90vh] flex-col justify-center py-10"
     >
-      <span className="font-mono text-xs tracking-[0.24em] text-black/40 uppercase">
+      <span className="font-mono text-xs tracking-[0.24em] text-black/40uppercase">
         {project.index} · {project.tagline}
       </span>
       <h3 className="mt-4 text-2xl font-bold sm:text-3xl lg:text-4xl">
@@ -196,6 +207,7 @@ function TextBlock({
           </span>
         ))}
       </div>
+
       <a
         href={project.href}
         target="_blank"
@@ -204,6 +216,62 @@ function TextBlock({
       >
         Know more ↗
       </a>
+    </motion.div>
+  );
+}
+
+function MobileProjectCard({
+  project,
+}: {
+  project: (typeof PROJECTS)[number];
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="flex flex-col"
+    >
+      <span className="mb-6 font-mono text-xs tracking-[0.24em] text-black/40 uppercase">
+        {project.index} · {project.tagline}
+      </span>
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-[0_16px_40px_rgba(0,0,0,0.1)]">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
+
+      <div className="mt-6">
+        <h3 className="mt-3 text-2xl font-bold">{project.title}</h3>
+        <p className="mt-4 text-sm leading-relaxed text-black/70">
+          {project.description}
+        </p>
+
+        <div className="mt-5 flex flex-wrap gap-2">
+          {project.stack.map((tech) => (
+            <span
+              key={tech}
+              className="rounded-full border border-black/15 px-3 py-1 text-xs font-medium text-black/70"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        <a
+          href={project.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group mt-6 inline-flex w-fit items-center gap-2 rounded-full border border-black/15 px-4 py-2 text-sm font-semibold text-black transition hover:bg-black hover:text-white"
+        >
+          Know more ↗
+        </a>
+      </div>
     </motion.div>
   );
 }
