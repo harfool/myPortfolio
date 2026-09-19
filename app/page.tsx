@@ -9,6 +9,7 @@ import Experience from "@/components/Experience";
 import CopyEmailMarquee from "@/components/CopyEmailMarquee";
 import Contact from "@/components/Contact";
 import Loader from "@/components/Loader";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,6 +35,7 @@ export default function Home() {
   return (
     <>
       <Loader isLoading={isLoading} />
+      <ScrollToTop />
       <Hero isLoaded={!isLoading} />
       <About />
       <Work />
