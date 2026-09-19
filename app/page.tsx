@@ -6,6 +6,8 @@ import About from "@/components/About";
 import Work from "@/components/Work";
 import Service from "@/components/Service";
 import Experience from "@/components/Experience";
+import CopyEmailMarquee from "@/components/CopyEmailMarquee";
+import Contact from "@/components/Contact";
 import Loader from "@/components/Loader";
 
 export default function Home() {
@@ -37,6 +39,8 @@ export default function Home() {
       <Work />
       <Service />
       <Experience />
+      <CopyEmailMarquee />
+      <Contact />
     </>
   );
 }
