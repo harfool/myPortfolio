@@ -4,9 +4,12 @@ import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 const SOCIALS = [
-  { label: "GitHub", href: "#" },
-  { label: "LinkedIn", href: "#" },
-  { label: "Twitter", href: "#" },
+  { label: "GitHub", href: "https://github.com/harfool" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/harfool-gurjar-84997637a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+  },
+  { label: "X", href: "https://x.com/harfool_gurjar0" },
 ];
 
 const container = {
@@ -103,7 +106,7 @@ export default function Hero({ isLoaded }: HeroProps) {
               Building clean, fast, conversion-focused web experiences.
             </p>
             <a
-              href="#work"
+              href="#contact"
               className="mt-5 inline-flex items-center gap-1 rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5"
             >
               Let&apos;s collaborate ↗
@@ -119,7 +122,7 @@ export default function Hero({ isLoaded }: HeroProps) {
               <a
                 key={s.label}
                 href={s.href}
-                className="rounded-full border border-black/10 bg-white/60 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:-translate-x-1 hover:border-black/30"
+                className="rounded-full border border-black/10 bg-white/60 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:-translate-x-1 hover:border-black/30 text-center"
               >
                 {s.label}
               </a>
@@ -153,7 +156,7 @@ export default function Hero({ isLoaded }: HeroProps) {
             Building clean, fast, conversion-focused web experiences.
           </p>
           <a
-            href="#work"
+            href="#contact"
             className="mt-5 inline-flex items-center gap-1 rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white"
           >
             Let&apos;s collaborate ↗

@@ -6,9 +6,9 @@ import Image from "next/image";
 
 const NAV_LINKS = [
   { label: "About" },
-  { label: "Work", count: 24 },
+  { label: "Work", count: 3 },
   { label: "Service", count: 4 },
-  { label: "Experience", count: "5+" },
+  { label: "Experience" },
   { label: "Contact" },
 ];
 
@@ -36,16 +36,6 @@ export default function Header() {
           scrolled ? "sm:shadow-lg" : "sm:shadow-none"
         }`}
       >
-        {/* Badge */}
-        {/* <span className="inline-flex shrink-0 items-center gap-2 rounded-full border border-black/10 px-3 py-1.5 text-xs font-medium">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-          </span>
-          <span className="hidden sm:inline">Available for New Project</span>
-          <span className="sm:hidden">Available</span>
-        </span> */}
-
         <Image
           src="/logo.png"
           alt="Logo"

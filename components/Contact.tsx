@@ -10,8 +10,16 @@ const CONTACT_LINKS = [
     href: "mailto:harfoolgujjar63@gmail.com",
   },
   { label: "Phone", value: "+91 96102 37965", href: "tel:+919610237965" },
-  { label: "LinkedIn", value: "Connect with me", href: "#" },
-  { label: "GitHub", value: "See the code", href: "#" },
+  {
+    label: "LinkedIn",
+    value: "Connect with me",
+    href: "https://www.linkedin.com/in/harfool-gurjar-84997637a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+  },
+  {
+    label: "GitHub",
+    value: "See the code",
+    href: "https://github.com/harfool",
+  },
 ];
 
 const fadeUp = {
@@ -84,6 +92,8 @@ export default function Contact() {
                 key={link.label}
                 variants={fadeUp}
                 href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group flex items-center justify-between border-b border-white/15 py-5 transition-colors hover:bg-white/5"
               >
                 <div className="flex items-baseline gap-4">
