@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Work from "@/components/Work";
+import Service from "@/components/Service";
 import Experience from "@/components/Experience";
 import Loader from "@/components/Loader";
 
@@ -34,6 +35,7 @@ export default function Home() {
       <Hero isLoaded={!isLoading} />
       <About />
       <Work />
+      <Service />
       <Experience />
     </>
   );
