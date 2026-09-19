@@ -218,7 +218,7 @@ function FormField({
           placeholder={placeholder}
           onFocus={() => setFocused(id)}
           onBlur={() => setFocused(null)}
-          className="mt-3 w-full resize-none border-b border-black/15 bg-transparent pb-3 text-base outline-none placeholder:text-black/30 sm:text-lg"
+          className="mt-3 block w-full resize-none border-b border-black/15 bg-transparent pb-3 text-base outline-none placeholder:text-black/30 sm:text-lg"
         />
       ) : (
         <input
@@ -234,7 +234,7 @@ function FormField({
       <motion.div
         initial={false}
         animate={{ scaleX: isFocused ? 1 : 0 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         style={{ transformOrigin: "left" }}
         className="absolute bottom-0 left-0 h-px w-full bg-black"
       />
