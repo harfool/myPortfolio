@@ -6,50 +6,50 @@ import { motion, AnimatePresence } from "framer-motion";
 const SERVICES = [
   {
     index: "01",
-    title: "Frontend Development",
-    tagline: "React & Next.js interfaces built to perform",
+    title: "Full-Stack Development",
+    tagline: "Production-grade apps, database to deploy",
     description:
-      "Component-driven frontends built with React and Next.js - typed, tested, and structured to scale past the first version instead of needing a rewrite.",
+      "End-to-end product builds on modern stacks - typed APIs, clean data models, and frontends structured to scale past the first release instead of needing a rewrite.",
     deliverables: [
-      "React / Next.js application builds",
-      "Reusable, accessible component libraries",
-      "State management (Zustand, Redux Toolkit)",
+      "Next.js / React applications with typed APIs",
+      "Database design (PostgreSQL, MongoDB) and auth",
+      "Cloud deployment and CI/CD pipelines",
     ],
   },
   {
     index: "02",
-    title: "Figma to Code",
-    tagline: "Pixel-accurate builds from your designs",
+    title: "AI Automation",
+    tagline: "Workflows that save real hours, not headlines",
     description:
-      "Designs translated into production code without the usual drift - correct spacing, type scale, and states, checked against the file rather than eyeballed.",
+      "AI wired into actual business operations - support, data entry, reporting - built to cut manual work measurably, not bolted on as a demo feature.",
     deliverables: [
-      "Pixel-accurate component implementation",
-      "Responsive breakpoints from a single design file",
-      "Design system to Tailwind/CSS token mapping",
+      "LLM-powered workflow and process automation",
+      "Custom AI integrations into existing tools",
+      "Internal dashboards and reporting agents",
     ],
   },
   {
     index: "03",
-    title: "Full-Stack Web Apps",
-    tagline: "End-to-end product builds, MERN + Next.js",
+    title: "Digital Marketing",
+    tagline: "Growth measured by pipeline, not impressions",
     description:
-      "Complete applications from database to UI - REST APIs, authentication, and admin dashboards alongside the frontend, so one person owns the whole stack.",
+      "Campaigns and funnels built around conversion and revenue - SEO, content, and paid strategy tied to numbers a founder actually reports on.",
     deliverables: [
-      "REST APIs with Node.js, Express, and Prisma",
-      "Auth, role-based access, and admin dashboards",
-      "MongoDB / PostgreSQL schema design",
+      "SEO strategy and technical site audits",
+      "Conversion-focused landing pages and funnels",
+      "Analytics setup and performance reporting",
     ],
   },
   {
     index: "04",
-    title: "Performance Optimization",
-    tagline: "Faster load times, measurable results",
+    title: "Web Design & UI/UX",
+    tagline: "Interfaces judged by usability first",
     description:
-      "Audits and fixes for slow, bloated frontends - code-splitting, memoization, and asset optimization aimed at real Core Web Vitals improvement, not guesswork.",
+      "Design work rooted in clarity and conversion, not decoration - every screen earns its place, backed by a system that stays consistent as the product grows.",
     deliverables: [
-      "Bundle analysis and code-splitting",
-      "Memoization and re-render audits",
-      "Core Web Vitals and Lighthouse improvements",
+      "Wireframes, prototypes, and design systems",
+      "Responsive, accessible interface design",
+      "Figma-to-code handoff and design QA",
     ],
   },
 ];

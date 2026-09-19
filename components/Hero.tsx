@@ -122,6 +122,8 @@ export default function Hero({ isLoaded }: HeroProps) {
               <a
                 key={s.label}
                 href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="rounded-full border border-black/10 bg-white/60 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:-translate-x-1 hover:border-black/30 text-center"
               >
                 {s.label}
