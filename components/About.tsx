@@ -123,7 +123,7 @@ export default function About() {
         variants={container}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.1 }}
         className="mx-auto max-w-6xl"
       >
         {/* Eyebrow + huge heading */}

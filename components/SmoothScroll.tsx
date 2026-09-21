@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { cancelFrame, frame } from "framer-motion";
+import { lenisStore } from "@/lib/lenisStore";
 
 export default function SmoothScroll({
   children,
@@ -18,6 +19,7 @@ export default function SmoothScroll({
       smoothWheel: true,
     });
     lenisRef.current = lenis;
+    lenisStore.current = lenis;
 
     function onFrame(data: { timestamp: number }) {
       lenis.raf(data.timestamp);
@@ -36,6 +38,7 @@ export default function SmoothScroll({
       cancelFrame(onFrame);
       resizeObserver.disconnect();
       lenis.destroy();
+      lenisStore.current = null;
     };
   }, []);
 

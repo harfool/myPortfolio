@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { lenisStore } from "@/lib/lenisStore";
 
 const NAV_LINKS = [
   { label: "About" },
@@ -15,6 +16,25 @@ const NAV_LINKS = [
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const scrollPositionRef = useRef(0);
+
+  useEffect(() => {
+    const lenis = lenisStore.current;
+
+    if (open) {
+      lenis?.stop();
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      lenis?.start();
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      lenis?.start();
+    };
+  }, [open]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);

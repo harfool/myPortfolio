@@ -43,9 +43,15 @@ type HeroProps = {
 
 export default function Hero({ isLoaded }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
+  const mobileSectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const { scrollYProgress: mobileScrollYProgress } = useScroll({
+    target: mobileSectionRef,
     offset: ["start start", "end start"],
   });
 
@@ -55,8 +61,15 @@ export default function Hero({ isLoaded }: HeroProps) {
     mass: 0.5,
   });
 
+  const mobileSmoothProgress = useSpring(mobileScrollYProgress, {
+    stiffness: 120,
+    damping: 24,
+    mass: 0.5,
+  });
+
   const imageY = useTransform(smoothProgress, [0, 0.4], [0, -140]);
   const contentY = useTransform(smoothProgress, [0, 0.4], [0, -180]);
+  const mobileImageY = useTransform(mobileSmoothProgress, [0, 0.4], [0, -100]);
 
   return (
     <main className="min-h-svh overflow-y-auto bg-white text-black sm:h-svh sm:overflow-hidden">
@@ -139,6 +152,7 @@ export default function Hero({ isLoaded }: HeroProps) {
 
       {/* ---------- Mobile  ---------- */}
       <motion.section
+        ref={mobileSectionRef}
         variants={container}
         initial="hidden"
         animate={isLoaded ? "show" : "hidden"}
@@ -188,7 +202,8 @@ export default function Hero({ isLoaded }: HeroProps) {
           initial={{ opacity: 0, y: 40 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-          className="mt-3 flex justify-center px-8"
+          style={{ translateY: mobileImageY }}
+          className="mt-3 flex justify-center px-8 will-change-transform"
         >
           <Image
             src="/images/harfool-gurjar.png"
