@@ -96,7 +96,7 @@ export default function Experience() {
     <section
       ref={sectionRef}
       id="experience"
-      className="scroll-mt-12 lg:scroll-mt-0 px-6 py-10 lg:py-30 sm:px-10 lg:px-16"
+      className="scroll-mt-16 lg:scroll-mt-0 px-6 py-10 lg:py-30 sm:px-10 lg:px-16"
     >
       <div className="mx-auto max-w-6xl">
         <motion.div
