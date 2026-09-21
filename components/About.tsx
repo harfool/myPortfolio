@@ -193,7 +193,7 @@ export default function About() {
           {PROFICIENCY.map((p) => (
             <motion.div key={p.level} variants={fadeUp}>
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h5 className="text-lg font-bold">{p.level}</h5>
+                <h4 className="text-lg font-bold">{p.level}</h4>
                 <span className="font-mono text-xs text-black/60">
                   {p.meter}%
                 </span>

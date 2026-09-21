@@ -246,8 +246,11 @@ export const SERVICES = [
 
 export const EMAIL = "harfoolgujjar63@gmail.com";
 
-export const SITE_METADATA = {
-  title: "Harfool Gurjar",
-  description:
-    "Harfool Gurjar is a software engineer and web developer with a passion for creating innovative and user-friendly applications.",
-};
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://harfool.dev";
+
+export const SOCIAL_PROFILE_URLS = [
+  "https://github.com/harfool",
+  "https://www.linkedin.com/in/harfool-gurjar-84997637a",
+  "https://x.com/harfool_gurjar0",
+];

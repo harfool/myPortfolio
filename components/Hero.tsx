@@ -150,7 +150,7 @@ export default function Hero({ isLoaded }: HeroProps) {
         animate={isLoaded ? "show" : "hidden"}
         className="flex flex-col lg:hidden h-screen justify-between pt-24"
       >
-        <motion.h1
+        <motion.div
           variants={fadeUp}
           className="mt-2 flex select-none flex-col items-center whitespace-nowrap px-4 text-center leading-none"
         >
@@ -160,7 +160,7 @@ export default function Hero({ isLoaded }: HeroProps) {
           <span className="[font-family:var(--font-display)] text-[clamp(3rem,11vw,6rem)] font-black uppercase tracking-[-0.02em] text-black">
             Gurjar
           </span>
-        </motion.h1>
+        </motion.div>
 
         <motion.div variants={fadeUp} className="px-6 pt-6 text-center">
           <h2 className="text-2xl font-bold">Founder and software engineer</h2>
