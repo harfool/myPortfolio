@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 const EMAIL = "harfoolgujjar63@gmail.com";
 const REPEAT_COUNT = 6;
@@ -28,9 +29,11 @@ export default function CopyEmailMarquee() {
           className="flex items-center gap-6 pr-6 text-6xl font-medium uppercase tracking-tight sm:gap-10 sm:pr-10 sm:text-7xl lg:text-8xl"
         >
           {label}
-          <img
+          <Image
             src="/logo.png"
             alt=""
+            width={64}
+            height={64}
             className="h-10 w-10 shrink-0 animate-spin-slow object-contain sm:h-14 sm:w-14 lg:h-16 lg:w-16"
           />
         </span>

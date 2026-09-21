@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import Image from "next/image";
 
 const SOCIALS = [
   { label: "GitHub", href: "https://github.com/harfool" },
@@ -86,9 +87,12 @@ export default function Hero({ isLoaded }: HeroProps) {
           style={{ translateY: imageY }}
           className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-[52svh] w-auto -translate-x-1/2 sm:h-[64svh] will-change-transform"
         >
-          <img
+          <Image
             src="/images/harfool-gurjar.png"
             alt="Harfool Gurjar"
+            width={800}
+            height={1000}
+            priority
             className="h-full w-auto object-cover object-top grayscale pt-16"
           />
         </motion.div>
@@ -186,9 +190,12 @@ export default function Hero({ isLoaded }: HeroProps) {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           className="mt-3 flex justify-center px-8"
         >
-          <img
+          <Image
             src="/images/harfool-gurjar.png"
             alt="Harfool Gurjar"
+            width={800}
+            height={1000}
+            priority
             className="max-h-[40svh] w-auto object-contain grayscale"
           />
         </motion.div>
