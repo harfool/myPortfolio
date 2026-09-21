@@ -1,6 +1,12 @@
 "use client";
 
-import { useRef, useEffect, useMemo, useState, CSSProperties } from "react";
+import {
+  useRef,
+  useEffect,
+  useMemo,
+  useState,
+  type CSSProperties,
+} from "react";
 import { cn } from "@/lib/utils";
 import {
   WebGLErrorBoundary,
@@ -375,8 +381,7 @@ export function AnimatedGradient({
           {
             borderRadius: radius,
             ...style,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } as any
+          } as CSSProperties
         }
       >
         <canvas

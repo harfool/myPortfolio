@@ -20,23 +20,6 @@ const fadeUp = {
   },
 };
 
-const tagContainer = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.03 },
-  },
-};
-
-const tagItem = {
-  hidden: { opacity: 0, y: 8, scale: 0.95 },
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const },
-  },
-};
-
 function CountUp({ value }: { value: string }) {
   const ref = useRef<HTMLParagraphElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.6 });

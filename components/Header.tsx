@@ -1,16 +1,15 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { lenisStore } from "@/lib/lenisStore";
 import { NAV_LINKS } from "@/lib/data";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  const scrollPositionRef = useRef(0);
 
   useEffect(() => {
     const lenis = lenisStore.current;
@@ -49,15 +48,15 @@ export default function Header() {
           scrolled ? "sm:shadow-lg" : "sm:shadow-none"
         }`}
       >
-        <a href="/#">
+        <Link href="/">
           <Image
             src="/logo.png"
-            alt="Logo"
+            alt="Harfool Gurjar home"
             width={40}
             height={40}
             className="rounded-full"
           />
-        </a>
+        </Link>
 
         {/* Desktop links */}
         <div className="hidden items-center gap-7 text-sm font-medium text-black/70 lg:flex">
