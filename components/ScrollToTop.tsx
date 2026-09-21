@@ -76,7 +76,7 @@ export default function ScrollToTop() {
       aria-label="Scroll to top"
       aria-hidden={!isVisible}
       tabIndex={isVisible ? 0 : -1}
-      className={`fixed right-6 bottom-6 z-40 grid h-14 w-14 place-items-center transition-all duration-300 ease-out hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 sm:right-8 sm:bottom-8 ${
+      className={`fixed right-6 bottom-6 z-40 grid h-14 w-14 place-items-center transition-all duration-300 ease-out hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 sm:right-8 sm:bottom-8 cursor-pointer ${
         isDarkBg ? "focus-visible:outline-white" : "focus-visible:outline-black"
       } ${
         isVisible

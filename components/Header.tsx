@@ -36,13 +36,15 @@ export default function Header() {
           scrolled ? "sm:shadow-lg" : "sm:shadow-none"
         }`}
       >
-        <Image
-          src="/logo.png"
-          alt="Logo"
-          width={40}
-          height={40}
-          className="rounded-full"
-        />
+        <a href="/">
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={40}
+            height={40}
+            className="rounded-full"
+          />
+        </a>
 
         {/* Desktop links */}
         <div className="hidden items-center gap-7 text-sm font-medium text-black/70 lg:flex">
