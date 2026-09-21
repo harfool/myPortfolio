@@ -60,7 +60,7 @@ export default function Service() {
   return (
     <section
       id="service"
-      className="scroll-mt-20 py-10 lg:py-0 bg-white px-6 text-black sm:px-10 lg:px-16 "
+      className="scroll-mt-20 lg:scroll-mt-28 py-10 lg:py-0 bg-white px-6 text-black sm:px-10 lg:px-16 "
     >
       <div className="mx-auto max-w-6xl">
         <motion.div

@@ -41,7 +41,7 @@ export default function Work() {
   return (
     <section
       id="work"
-      className="scroll-mt-20 bg-white px-6 py-10 text-black sm:px-10 lg:px-16 lg:pt-4"
+      className="scroll-mt-20 lg:scroll-mt-26 bg-white px-6 py-10 text-black sm:px-10 lg:px-16 lg:pt-4"
     >
       <div className="mx-auto max-w-6xl">
         <motion.div

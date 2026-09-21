@@ -117,7 +117,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="scroll-mt-20 bg-white px-6 py-10 lg:pt-4 lg:pb-20 text-black sm:px-10 lg:px-16 "
+      className="scroll-mt-20 lg:scroll-mt-26  bg-white px-6 py-10 lg:pt-4 lg:pb-20 text-black sm:px-10 lg:px-16 "
     >
       <motion.div
         variants={container}
