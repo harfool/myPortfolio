@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { EMAIL } from "@/lib/data";
 
@@ -8,12 +8,24 @@ const REPEAT_COUNT = 6;
 
 export default function CopyEmailMarquee() {
   const [copied, setCopied] = useState(false);
+  const resetTimerRef = useRef<number | null>(null);
+
+  useEffect(
+    () => () => {
+      if (resetTimerRef.current !== null)
+        window.clearTimeout(resetTimerRef.current);
+    },
+    [],
+  );
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(EMAIL);
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
+      resetTimerRef.current = window.setTimeout(() => {
+        setCopied(false);
+        resetTimerRef.current = null;
+      }, 2000);
     } catch {
       // Clipboard access can be unavailable outside a secure browser context.
     }

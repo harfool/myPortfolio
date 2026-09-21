@@ -32,9 +32,11 @@ export default function SmoothScroll({
     });
     resizeObserver.observe(document.body);
 
-    window.addEventListener("load", () => lenis.resize());
+    const onLoad = () => lenis.resize();
+    window.addEventListener("load", onLoad);
 
     return () => {
+      window.removeEventListener("load", onLoad);
       cancelFrame(onFrame);
       resizeObserver.disconnect();
       lenis.destroy();

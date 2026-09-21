@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import Image from "next/image";
 import { PROJECTS } from "@/lib/data";
@@ -58,6 +58,10 @@ function ScrollytellingWork() {
   const [segmentProgress, setSegmentProgress] = useState(0);
 
   const activeProject = PROJECTS[active];
+  const handleProgress = useCallback((index: number, progress: number) => {
+    setActive(index);
+    setSegmentProgress(progress);
+  }, []);
 
   return (
     <div className="relative mt-16">
@@ -81,7 +85,6 @@ function ScrollytellingWork() {
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover"
-                    priority
                   />
                 </motion.div>
               </AnimatePresence>
@@ -109,10 +112,8 @@ function ScrollytellingWork() {
               key={project.title}
               project={project}
               isActive={i === active}
-              onProgress={(p) => {
-                setActive(i);
-                setSegmentProgress(p);
-              }}
+              onProgress={handleProgress}
+              projectIndex={i}
             />
           ))}
         </div>
@@ -125,10 +126,12 @@ function TextBlock({
   project,
   isActive,
   onProgress,
+  projectIndex,
 }: {
   project: (typeof PROJECTS)[number];
   isActive: boolean;
-  onProgress: (progress: number) => void;
+  onProgress: (index: number, progress: number) => void;
+  projectIndex: number;
 }) {
   const blockRef = useRef<HTMLDivElement>(null);
 
@@ -142,11 +145,11 @@ function TextBlock({
       // Only claim "active" while this block is actually the one
       // straddling the center trigger point (0 < v < 1).
       if (v > 0 && v < 1) {
-        onProgress(Math.min(Math.max(v, 0), 1));
+        onProgress(projectIndex, Math.min(Math.max(v, 0), 1));
       }
     });
     return unsubscribe;
-  }, [scrollYProgress, onProgress]);
+  }, [scrollYProgress, onProgress, projectIndex]);
 
   return (
     <motion.div
