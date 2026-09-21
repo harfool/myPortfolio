@@ -2,57 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const SERVICES = [
-  {
-    index: "01",
-    title: "Full-Stack Development",
-    tagline: "Production-grade apps, database to deploy",
-    description:
-      "End-to-end product builds on modern stacks - typed APIs, clean data models, and frontends structured to scale past the first release instead of needing a rewrite.",
-    deliverables: [
-      "Next.js / React applications with typed APIs",
-      "Database design (PostgreSQL, MongoDB) and auth",
-      "Cloud deployment and CI/CD pipelines",
-    ],
-  },
-  {
-    index: "02",
-    title: "AI Automation",
-    tagline: "Workflows that save real hours, not headlines",
-    description:
-      "AI wired into actual business operations - support, data entry, reporting - built to cut manual work measurably, not bolted on as a demo feature.",
-    deliverables: [
-      "LLM-powered workflow and process automation",
-      "Custom AI integrations into existing tools",
-      "Internal dashboards and reporting agents",
-    ],
-  },
-  {
-    index: "03",
-    title: "Digital Marketing",
-    tagline: "Growth measured by pipeline, not impressions",
-    description:
-      "Campaigns and funnels built around conversion and revenue - SEO, content, and paid strategy tied to numbers a founder actually reports on.",
-    deliverables: [
-      "SEO strategy and technical site audits",
-      "Conversion-focused landing pages and funnels",
-      "Analytics setup and performance reporting",
-    ],
-  },
-  {
-    index: "04",
-    title: "Web Design & UI/UX",
-    tagline: "Interfaces judged by usability first",
-    description:
-      "Design work rooted in clarity and conversion, not decoration - every screen earns its place, backed by a system that stays consistent as the product grows.",
-    deliverables: [
-      "Wireframes, prototypes, and design systems",
-      "Responsive, accessible interface design",
-      "Figma-to-code handoff and design QA",
-    ],
-  },
-];
+import { SERVICES } from "@/lib/data";
 
 export default function Service() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);

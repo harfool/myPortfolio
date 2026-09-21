@@ -3,39 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import Image from "next/image";
-
-const PROJECTS = [
-  {
-    index: "01",
-    title: "Zoo Management System",
-    href: "https://zms.chaipecharcha.tech/",
-    tagline: "Public site + admin dashboard for zoo operations",
-    description:
-      "A full platform to manage zoo operations - animal records, staff, and visitor ticketing. Public site with an animal catalogue and booking flow, plus a role-based admin dashboard for owners, admins, and editors.",
-    stack: ["React", "Tailwind", "Node", "Express", "MongoDB", "JWT"],
-    image: "/images/work/zoo-management.png",
-  },
-  {
-    index: "02",
-    title: "Marwar Saheli",
-    href: "https://marwarsaheli.com/",
-    tagline: "E-commerce platform for Rajasthani spices",
-    description:
-      "An online storefront selling authentic Rajasthani spices, built for scale - product search, reviews, lazy-loaded imagery, and a full order pipeline from cart to payment.",
-    stack: ["React", "Tailwind", "Node", "Express", "MongoDB", "Razorpay"],
-    image: "/images/work/marwar-saheli.png",
-  },
-  {
-    index: "03",
-    title: "AI | Gen AI",
-    href: "https://harfool-ai.vercel.app/",
-    tagline: "Platform showcasing AI-generated content",
-    description:
-      "A marketing and demo platform for showcasing AI-generated content and applications - clean landing experience built to convert, with performance and clarity as the priority.",
-    stack: ["React", "Tailwind", "Node", "Express", "MongoDB"],
-    image: "/images/work/ai-gen-ai.png",
-  },
-];
+import { PROJECTS } from "@/lib/data";
 
 export default function Work() {
   return (

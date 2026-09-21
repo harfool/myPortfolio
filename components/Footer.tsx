@@ -1,35 +1,12 @@
 "use client";
 
 import Image from "next/image";
-
-const QUICK_LINKS = [
-  { label: "Home", href: "#" },
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Work", href: "#work" },
-  { label: "Contact", href: "#contact" },
-];
-
-const SERVICES = [
-  "Full-Stack Development",
-  "AI Automation",
-  "Digital Marketing",
-  "Web Design & UI/UX",
-];
-
-const SOCIALS = [
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/harfool-gurjar-84997637a",
-  },
-  { label: "GitHub", href: "https://github.com/harfool" },
-  { label: "Email", href: "mailto:harfoolgujjar63@gmail.com" },
-];
-
-const NOTES = [
-  "Every project starts with understanding the problem before writing a single line of code",
-  "Performance and clean architecture aren't optional - they're the baseline",
-];
+import {
+  FOOTER_SERVICES,
+  FOOTER_SOCIALS,
+  NOTES,
+  QUICK_LINKS,
+} from "@/lib/data";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -105,7 +82,7 @@ export default function Footer() {
               Services
             </p>
             <ul className="mt-4 space-y-2">
-              {SERVICES.map((service) => (
+              {FOOTER_SERVICES.map((service) => (
                 <li key={service} className="text-sm text-black/70">
                   {service}
                 </li>
@@ -118,7 +95,7 @@ export default function Footer() {
               Elsewhere
             </p>
             <div className="mt-4 flex flex-col gap-2">
-              {SOCIALS.map((social) => (
+              {FOOTER_SOCIALS.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}

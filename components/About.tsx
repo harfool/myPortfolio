@@ -2,52 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useInView, animate } from "framer-motion";
-
-const FOCUS_AREAS = [
-  "Performance optimization",
-  "Component architecture",
-  "Design system thinking",
-  "Pixel-accurate UI",
-];
-
-const TECH_STACK = [
-  "React.js",
-  "Next.js",
-  "TypeScript",
-  "Tailwind CSS",
-  "Framer Motion",
-  "Node.js",
-  "Prisma",
-  "Figma",
-];
-
-const STATS = [
-  { value: "10+", label: "Months in production" },
-  { value: "20+", label: "Projects shipped" },
-  { value: "40%", label: "Avg. load-time cut" },
-  { value: "100%", label: "Responsive builds" },
-];
-
-const PROFICIENCY = [
-  {
-    level: "Expert",
-    meter: 90,
-    desc: "Advanced proficiency with deep understanding",
-    skills: ["React.js", "JavaScript (ES6+)", "Tailwind CSS"],
-  },
-  {
-    level: "Proficient",
-    meter: 65,
-    desc: "Strong working knowledge and experience",
-    skills: ["Redux Toolkit", "Node.js", "MongoDB"],
-  },
-  {
-    level: "Learning",
-    meter: 30,
-    desc: "Actively learning and gaining experience",
-    skills: ["Docker", "PostgreSQL", "Prisma ORM"],
-  },
-];
+import { FOCUS_AREAS, PROFICIENCY, STATS, TECH_STACK } from "@/lib/data";
 
 const container = {
   hidden: {},

@@ -4,6 +4,7 @@ import { Archivo } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
+import { SITE_METADATA } from "@/lib/data";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -18,11 +19,7 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
-export const metadata: Metadata = {
-  title: "Harfool Gurjar",
-  description:
-    "Harfool Gurjar is a software engineer and web developer with a passion for creating innovative and user-friendly applications.",
-};
+export const metadata: Metadata = SITE_METADATA;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

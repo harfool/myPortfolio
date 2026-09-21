@@ -3,15 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
-
-const SOCIALS = [
-  { label: "GitHub", href: "https://github.com/harfool" },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/harfool-gurjar-84997637a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-  },
-  { label: "X", href: "https://x.com/harfool_gurjar0" },
-];
+import { HERO_SOCIALS } from "@/lib/data";
 
 const container = {
   hidden: {},
@@ -135,7 +127,7 @@ export default function Hero({ isLoaded }: HeroProps) {
             style={{ translateY: contentY }}
             className="hidden flex-col gap-3 sm:flex will-change-transform"
           >
-            {SOCIALS.map((s) => (
+            {HERO_SOCIALS.map((s) => (
               <a
                 key={s.label}
                 href={s.href}
@@ -187,7 +179,7 @@ export default function Hero({ isLoaded }: HeroProps) {
           variants={fadeUp}
           className="mt-6 flex flex-wrap justify-center gap-3 px-6 pb-8"
         >
-          {SOCIALS.map((s) => (
+          {HERO_SOCIALS.map((s) => (
             <a
               key={s.label}
               href={s.href}

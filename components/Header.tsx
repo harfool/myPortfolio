@@ -4,14 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { lenisStore } from "@/lib/lenisStore";
-
-const NAV_LINKS = [
-  { label: "About" },
-  { label: "Work", count: 3 },
-  { label: "Service", count: 4 },
-  { label: "Experience" },
-  { label: "Contact" },
-];
+import { NAV_LINKS } from "@/lib/data";
 
 export default function Header() {
   const [open, setOpen] = useState(false);

@@ -2,57 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-
-const EXPERIENCE = [
-  {
-    role: "Founder",
-    org: "Growify India",
-    location: "Remote",
-    period: "Present",
-    current: true,
-    points: [
-      "Leading product and engineering for Growify India's client projects",
-      "Building full-stack web applications with a small in-house team",
-      "Owning architecture, delivery, and client relationships end to end",
-      "Setting technical direction across React, Next.js, and Node stacks",
-    ],
-    stack: ["Next.js", "TypeScript", "React.js", "Node.js", "Prisma"],
-  },
-  {
-    role: "Freelance Software Engineer",
-    org: "Freelance",
-    location: "Remote",
-    period: "July 2025 - Present",
-    current: false,
-    points: [
-      "Built and deployed full-stack apps using the MERN stack for diverse clients",
-      "Designed REST APIs with JWT authentication and database integrations",
-      "Delivered production-ready solutions using Docker and Vercel/Render",
-      "Collaborated with clients through Agile workflows, on time and on spec",
-    ],
-    stack: ["Node.js", "MongoDB", "Docker", "JWT", "REST APIs"],
-  },
-  {
-    role: "Frontend Developer Intern",
-    org: "MetaCaps IT Solutions",
-    location: "Bijainagar, Ajmer",
-    period: "Dec 2023 - Sept 2024",
-    current: false,
-    points: [
-      "Built reusable, accessible React UI components from Figma (WCAG)",
-      "Translated designs into pixel-perfect UIs - ~25% faster feedback cycles",
-      "Integrated REST APIs; managed state with Hooks/Context",
-      "Applied memoization + code-splitting for a ~40% load speed boost",
-    ],
-    stack: [
-      "React.js",
-      "JavaScript (ES6+)",
-      "Redux Toolkit",
-      "Zustand",
-      "Tailwind CSS",
-    ],
-  },
-];
+import { EXPERIENCE } from "@/lib/data";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },

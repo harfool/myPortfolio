@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { EMAIL } from "@/lib/data";
 
-const EMAIL = "harfoolgujjar63@gmail.com";
 const REPEAT_COUNT = 6;
 
 export default function CopyEmailMarquee() {

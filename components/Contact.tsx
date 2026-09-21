@@ -2,25 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-
-const CONTACT_LINKS = [
-  {
-    label: "Email",
-    value: "harfoolgujjar63@gmail.com",
-    href: "mailto:harfoolgujjar63@gmail.com",
-  },
-  { label: "Phone", value: "+91 96102 37965", href: "tel:+919610237965" },
-  {
-    label: "LinkedIn",
-    value: "Connect with me",
-    href: "https://www.linkedin.com/in/harfool-gurjar-84997637a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-  },
-  {
-    label: "GitHub",
-    value: "See the code",
-    href: "https://github.com/harfool",
-  },
-];
+import { CONTACT_LINKS } from "@/lib/data";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
