@@ -202,7 +202,6 @@ export default function Hero({ isLoaded }: HeroProps) {
             alt="Harfool Gurjar"
             width={800}
             height={1000}
-            priority
             className="max-h-[40svh] w-auto object-contain grayscale"
           />
         </motion.div>

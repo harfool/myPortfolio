@@ -64,7 +64,7 @@ export const CONTACT_LINKS = [
 ];
 
 export const QUICK_LINKS = [
-  { label: "Home", href: "#" },
+  { label: "Home", href: "/" },
   { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
   { label: "Work", href: "#work" },

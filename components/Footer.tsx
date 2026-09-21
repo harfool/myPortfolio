@@ -3,6 +3,7 @@ import {
   FOOTER_SERVICES,
   FOOTER_SOCIALS,
   NOTES,
+  CONTACT_LINKS,
   QUICK_LINKS,
 } from "@/lib/data";
 
@@ -41,18 +42,15 @@ export default function Footer() {
               Contact
             </p>
             <div className="mt-4 space-y-2 text-sm">
-              <a
-                href="mailto:harfoolgujjar63@gmail.com"
-                className="block text-black/70 transition hover:text-black"
-              >
-                harfoolgujjar63@gmail.com
-              </a>
-              <a
-                href="tel:+919610237965"
-                className="block text-black/70 transition hover:text-black"
-              >
-                +91 96102 37965
-              </a>
+              {CONTACT_LINKS.slice(0, 2).map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="block text-black/70 transition hover:text-black"
+                >
+                  {link.value}
+                </a>
+              ))}
               <p className="text-black/70">Bhilware, Rajasthan, India</p>
             </div>
           </div>
