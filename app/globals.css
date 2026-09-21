@@ -57,3 +57,27 @@ a {
     transform: rotate(360deg);
   }
 }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000;
+  border-radius: 9999px;
+  border: 2px solid #fff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #000 transparent;
+}

@@ -36,7 +36,7 @@ export default function Header() {
           scrolled ? "sm:shadow-lg" : "sm:shadow-none"
         }`}
       >
-        <a href="/">
+        <a href="/#">
           <Image
             src="/logo.png"
             alt="Logo"
