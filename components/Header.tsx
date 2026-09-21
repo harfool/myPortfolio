@@ -35,6 +35,17 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
   return (
     <motion.header
       initial={{ opacity: 0, y: -24 }}
@@ -89,6 +100,8 @@ export default function Header() {
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
             className="flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-full border border-black/10 lg:hidden"
           >
             <motion.span
@@ -111,6 +124,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.2 }}
+            id="mobile-menu"
             className="mx-auto mt-2 max-w-6xl rounded-2xl border border-black/10 bg-white/95 p-4 shadow-lg backdrop-blur-md lg:hidden"
           >
             <div className="flex flex-col">

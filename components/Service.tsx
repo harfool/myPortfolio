@@ -58,6 +58,8 @@ export default function Service() {
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  aria-controls={`service-panel-${service.index}`}
                   className="group flex w-full items-center justify-between gap-4 py-6 text-left sm:py-8"
                 >
                   <div className="flex items-baseline gap-4 sm:gap-8">
@@ -98,6 +100,7 @@ export default function Service() {
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                      id={`service-panel-${service.index}`}
                       className="overflow-hidden"
                     >
                       <div className="grid gap-8 pb-8 sm:grid-cols-[1.3fr_1fr] sm:pl-[3.25rem] sm:pb-10">

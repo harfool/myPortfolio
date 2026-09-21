@@ -69,10 +69,10 @@ export default function About() {
           variants={fadeUp}
           className="flex items-baseline justify-between gap-4"
         >
-          <span className="font-mono text-xs uppercase tracking-[0.3em] text-black/40">
+          <span className="font-mono text-xs uppercase tracking-[0.3em] text-black/60">
             01 / About
           </span>
-          <span className="hidden font-mono text-xs uppercase tracking-[0.3em] text-black/40 sm:inline">
+          <span className="hidden font-mono text-xs uppercase tracking-[0.3em] text-black/60 sm:inline">
             Bhilwara, Rajasthan, India
           </span>
         </motion.div>
@@ -115,7 +115,7 @@ export default function About() {
         {/* Two-column: journey + focus / availability */}
         <div className="mt-14 grid gap-px overflow-hidden border border-black bg-black lg:grid-cols-[1.4fr_1fr]">
           <motion.div variants={fadeUp} className="bg-white p-8 sm:p-10">
-            <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-black/40">
+            <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-black/60">
               My journey
             </h3>
             <p className="mt-4 text-base leading-relaxed text-black/80 sm:text-lg">
@@ -142,7 +142,7 @@ export default function About() {
             className="flex flex-col justify-between bg-black p-8 text-white sm:p-10"
           >
             <div>
-              <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-white/40">
+              <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-white/60">
                 Status
               </h3>
               <div className="mt-4 flex items-center gap-2">
@@ -167,7 +167,7 @@ export default function About() {
 
         {/* Tech stack marquee-style row */}
         <motion.div variants={fadeUp} className="mt-14">
-          <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-black/40">
+          <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-black/60">
             Tech stack
           </h3>
           <div className="mt-5 flex flex-wrap gap-3">
@@ -184,7 +184,7 @@ export default function About() {
 
         {/* Proficiency - horizontal meters */}
         <motion.div variants={fadeUp} className="mt-14">
-          <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-black/40">
+          <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-black/60">
             Proficiency
           </h3>
         </motion.div>
@@ -194,7 +194,7 @@ export default function About() {
             <motion.div key={p.level} variants={fadeUp}>
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <h5 className="text-lg font-bold">{p.level}</h5>
-                <span className="font-mono text-xs text-black/40">
+                <span className="font-mono text-xs text-black/60">
                   {p.meter}%
                 </span>
               </div>

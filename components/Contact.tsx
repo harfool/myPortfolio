@@ -34,7 +34,7 @@ export default function Contact() {
         >
           <motion.span
             variants={fadeUp}
-            className="font-mono text-xs uppercase tracking-[0.3em] text-white/40"
+            className="font-mono text-xs uppercase tracking-[0.3em] text-white/60"
           >
             05 / Contact
           </motion.span>
@@ -107,7 +107,7 @@ export default function Contact() {
         >
           <motion.span
             variants={fadeUp}
-            className="font-mono text-xs uppercase tracking-[0.3em] text-black/40"
+            className="font-mono text-xs uppercase tracking-[0.3em] text-black/60"
           >
             Send a message
           </motion.span>
@@ -187,7 +187,7 @@ function FormField({
       <label
         htmlFor={id}
         className={`block text-xs font-mono uppercase tracking-[0.2em] transition-colors ${
-          isFocused ? "text-black" : "text-black/40"
+          isFocused ? "text-black" : "text-black/60"
         }`}
       >
         {label}
