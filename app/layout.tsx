@@ -4,6 +4,7 @@ import { Archivo } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
+import CursorTrail from "@/components/ui/smooth-cursor";
 import { SITE_URL, SOCIAL_PROFILE_URLS } from "@/lib/data";
 import "./globals.css";
 
@@ -101,6 +102,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${ibmPlexMono.variable} ${archivo.variable} h-full antialiased`}
     >
       <body className="flex min-h-screen flex-col bg-white font-sans text-black selection:bg-black selection:text-white">
+        <CursorTrail color="bg-black" size={10} count={6} />
         <SmoothScroll>
           <Header />
           {children}
