@@ -205,6 +205,7 @@ export const SERVICES = [
       "Database design (PostgreSQL, MongoDB) and auth",
       "Cloud deployment and CI/CD pipelines",
     ],
+    logo: "/images/services/full-stack.png",
   },
   {
     index: "02",
@@ -217,6 +218,7 @@ export const SERVICES = [
       "Custom AI integrations into existing tools",
       "Internal dashboards and reporting agents",
     ],
+    logo: "/images/services/ai-automation.png",
   },
   {
     index: "03",
@@ -229,6 +231,7 @@ export const SERVICES = [
       "Conversion-focused landing pages and funnels",
       "Analytics setup and performance reporting",
     ],
+    logo: "/images/services/digital-marketing.png",
   },
   {
     index: "04",
@@ -241,6 +244,7 @@ export const SERVICES = [
       "Responsive, accessible interface design",
       "Figma-to-code handoff and design QA",
     ],
+    logo: "/images/services/web-design-uiux.png",
   },
 ];
 

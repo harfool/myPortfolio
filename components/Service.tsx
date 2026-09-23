@@ -1,16 +1,193 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import Image from "next/image";
 import { SERVICES } from "@/lib/data";
 
-export default function Service() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+const N = SERVICES.length;
+const M = N - 1;
+
+/* Desktop: satellites fan across a 120° arc on the LEFT of the active logo */
+const ARC = (2 * Math.PI) / 3;
+const STEP = M > 1 ? ARC / (M - 1) : 0;
+
+const desktopSlot = (offset: number) => {
+  if (offset === 0) return { x: 0.5, y: 0.12 };
+  const angle = Math.PI - (offset - (M + 1) / 2) * STEP;
+  const x = Math.cos(angle);
+  let y = Math.sin(angle);
+  if (offset === M) y *= 0.8;
+  return { x, y };
+};
+
+/* Mobile: satellites fan in a full arc ABOVE the centered active logo */
+const MOBILE_ARC = Math.PI * 0.9;
+const MOBILE_STEP = M > 1 ? MOBILE_ARC / (M - 1) : 0;
+
+const mobileSlot = (satelliteIndex: number) => {
+  const angle =
+    Math.PI + Math.PI / 2 - ((M - 1) / 2 - satelliteIndex) * MOBILE_STEP;
+  return { x: Math.cos(angle), y: Math.sin(angle) };
+};
+
+/* ================= SMALL CLUSTER (mobile + tablet) =================
+   Same radial idea as desktop: active logo dead center, satellites
+   arced above/around it, all absolutely positioned so nothing clips. */
+function SmallCluster({
+  active,
+  onSelect,
+}: {
+  active: number;
+  onSelect: (i: number) => void;
+}) {
+  const RADIUS = 110;
+  let satelliteIndex = 0;
 
   return (
-    <section
+    <div className="relative mx-auto h-10 mb-50 max-w-[320px] sm:max-w-[384px]">
+      {SERVICES.map((service, i) => {
+        const isActive = i === active;
+        const slot = isActive
+          ? { x: 0.1, y: 0.5 }
+          : mobileSlot(satelliteIndex++);
+
+        return (
+          <motion.button
+            key={service.title}
+            onClick={() => onSelect(i)}
+            aria-label={`Show ${service.title}`}
+            aria-pressed={isActive}
+            className="absolute top-1/2 left-1/2 cursor-pointer"
+            animate={{
+              x: slot.x * RADIUS - 20,
+              y: slot.y * RADIUS + 100,
+              scale: isActive ? 0.8 : 0.55,
+              opacity: isActive ? 1 : 0.95,
+              zIndex: isActive ? 10 : 5,
+            }}
+            transition={{ type: "spring", stiffness: 240, damping: 24 }}
+          >
+            <div className="-translate-x-1/2 -translate-y-1/2">
+              <div
+                className={`relative flex items-center justify-center rounded-full bg-white shadow-[0_8px_24px_rgba(0,0,0,0.12)] ${
+                  isActive
+                    ? "h-32 w-32 p-8 sm:h-36 sm:w-36 sm:p-9"
+                    : "h-26 w-26 p-5 sm:h-28 sm:w-28 sm:p-6"
+                }`}
+              >
+                <div className="relative h-full w-full">
+                  <Image
+                    src={service.logo}
+                    alt={service.title}
+                    fill
+                    sizes="144px"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </motion.button>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ================= DESKTOP CLUSTER (unchanged) ================= */
+function DesktopCluster({
+  active,
+  onSelect,
+}: {
+  active: number;
+  onSelect: (i: number) => void;
+}) {
+  const RADIUS = 185;
+
+  return (
+    <>
+      {SERVICES.map((service, i) => {
+        const offset = (i - active + N) % N;
+        const slot = desktopSlot(offset);
+        const isActive = offset === 0;
+
+        return (
+          <motion.button
+            key={service.title}
+            onClick={() => onSelect(i)}
+            aria-label={`Show ${service.title}`}
+            aria-pressed={isActive}
+            className="absolute cursor-pointer"
+            style={{ left: "68%", top: "48%" }}
+            animate={{
+              x: slot.x * RADIUS,
+              y: slot.y * RADIUS,
+              scale: isActive ? 1 : 0.48,
+              opacity: isActive ? 1 : 0.95,
+              zIndex: isActive ? 10 : 5,
+            }}
+            transition={{ type: "spring", stiffness: 220, damping: 24 }}
+          >
+            <div className="-translate-x-1/2 -translate-y-1/2">
+              <div className="relative flex h-28 w-28 items-center justify-center overflow-hidden rounded-full bg-white p-4 shadow-[0_8px_24px_rgba(0,0,0,0.12)] sm:h-42 sm:w-42 sm:p-6">
+                <div className="relative h-full w-full">
+                  <Image
+                    src={service.logo}
+                    alt={service.title}
+                    fill
+                    sizes="128px"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </motion.button>
+        );
+      })}
+    </>
+  );
+}
+
+/* ================= SECTION ================= */
+export default function Service() {
+  const [active, setActive] = useState(0);
+  const activeService = SERVICES[active];
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const [bounds, setBounds] = useState({ start: 1152, full: 1152 });
+
+  useEffect(() => {
+    const updateBounds = () => {
+      const viewportWidth = document.documentElement.clientWidth;
+      setBounds({ start: Math.min(1152, viewportWidth), full: viewportWidth });
+    };
+    updateBounds();
+    window.addEventListener("resize", updateBounds);
+    return () => window.removeEventListener("resize", updateBounds);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "start start"],
+  });
+
+  const sectionWidth = useTransform(
+    scrollYProgress,
+    [0, 0.9, 1],
+    [bounds.start, bounds.full, bounds.full],
+  );
+
+  return (
+    <motion.section
+      ref={sectionRef}
       id="service"
-      className="scroll-mt-20 lg:scroll-mt-28 py-10 lg:py-0 bg-white px-6 text-black sm:px-10 lg:px-16 "
+      style={{ width: sectionWidth }}
+      className="scroll-mt-20 mx-auto rounded-[4rem] bg-black px-6 py-10 text-white sm:px-10 lg:scroll-mt-28 lg:px-16"
     >
       <div className="mx-auto max-w-6xl">
         <motion.div
@@ -20,10 +197,10 @@ export default function Service() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="flex items-baseline justify-between gap-4"
         >
-          <span className="font-mono text-xs uppercase tracking-[0.3em] text-black/40">
+          <span className="font-mono text-xs uppercase tracking-[0.3em] text-white/40">
             03 / Service
           </span>
-          <span className="hidden font-mono text-xs uppercase tracking-[0.3em] text-black/40 sm:inline">
+          <span className="hidden font-mono text-xs uppercase tracking-[0.3em] text-white/40 sm:inline">
             {SERVICES.length} offerings
           </span>
         </motion.div>
@@ -40,140 +217,64 @@ export default function Service() {
           for you
         </motion.h2>
 
-        <div className="mt-16 border-t border-black">
-          {SERVICES.map((service, i) => {
-            const isOpen = openIndex === i;
-            return (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{
-                  duration: 0.5,
-                  ease: [0.22, 1, 0.36, 1],
-                  delay: i * 0.08,
-                }}
-                className="border-b border-black"
-              >
-                <button
-                  onClick={() => setOpenIndex(isOpen ? null : i)}
-                  aria-expanded={isOpen}
-                  aria-controls={`service-panel-${service.index}`}
-                  className="group flex w-full items-center justify-between gap-4 py-6 text-left sm:py-8"
-                >
-                  <div className="flex items-baseline gap-4 sm:gap-8">
-                    <span
-                      className={`font-mono text-sm transition-colors sm:text-base ${
-                        isOpen ? "text-black" : "text-black/30"
-                      }`}
-                    >
-                      {service.index}
-                    </span>
-                    <div>
-                      <h3 className="text-xl font-bold transition-colors sm:text-3xl">
-                        {service.title}
-                      </h3>
-                      <p
-                        className={`mt-1 text-xs text-black/50 transition-opacity sm:text-sm ${
-                          isOpen ? "opacity-0 sm:opacity-100" : "opacity-100"
-                        }`}
-                      >
-                        {service.tagline}
-                      </p>
-                    </div>
-                  </div>
-
-                  <span
-                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black transition-transform duration-300 sm:h-11 sm:w-11 ${
-                      isOpen ? "rotate-45" : ""
-                    }`}
-                  >
-                    <PlusIcon />
-                  </span>
-                </button>
-
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                      id={`service-panel-${service.index}`}
-                      className="overflow-hidden"
-                    >
-                      <div className="grid gap-8 pb-8 sm:grid-cols-[1.3fr_1fr] sm:pl-[3.25rem] sm:pb-10">
-                        <p className="text-sm leading-relaxed text-black/70 sm:text-base">
-                          {service.description}
-                        </p>
-                        <div>
-                          <p className="font-mono text-xs uppercase tracking-[0.2em] text-black/40">
-                            Includes
-                          </p>
-                          <ul className="mt-3 space-y-2">
-                            {service.deliverables.map((item) => (
-                              <li
-                                key={item}
-                                className="flex gap-3 text-sm text-black/75"
-                              >
-                                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-black/40" />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-14 flex flex-col items-start justify-between gap-6 rounded-2xl border border-black bg-black p-8 text-white sm:flex-row sm:items-center sm:p-10"
-        >
-          <div>
-            <p className="text-lg font-bold sm:text-xl">
-              Have a project in mind?
-            </p>
-            <p className="mt-1 text-sm text-white/60">
-              Let&apos;s figure out what it needs and get it built.
-            </p>
+        <div className="my-10 grid items-center gap-14 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+          <div className="lg:hidden">
+            <SmallCluster active={active} onSelect={setActive} />
           </div>
-          <a
-            href="#contact"
-            className="inline-flex w-fit items-center gap-1 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5"
-          >
-            Start a project ↗
-          </a>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
 
-function PlusIcon() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M8 1V15M1 8H15"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
+          <div className="relative mx-auto hidden h-120 max-w-xl lg:block">
+            <DesktopCluster active={active} onSelect={setActive} />
+          </div>
+
+          <div className="flex flex-col justify-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeService.title}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <div className="flex items-baseline gap-4">
+                  <span className="font-mono text-sm text-white/80">
+                    {activeService.index}
+                  </span>
+                  <div>
+                    <h3 className="text-2xl font-bold sm:text-3xl">
+                      {activeService.title}
+                    </h3>
+                    <p className="mt-1 text-sm text-white/50">
+                      {activeService.tagline}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-8 ml-8 flex flex-col gap-5">
+                  <p className="text-sm leading-relaxed text-white/80 sm:text-base">
+                    {activeService.description}
+                  </p>
+                  <div>
+                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/50">
+                      Includes
+                    </p>
+                    <ul className="mt-3 space-y-2">
+                      {activeService.deliverables.map((item) => (
+                        <li
+                          key={item}
+                          className="flex gap-3 text-sm text-white/80"
+                        >
+                          <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-white/80" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </motion.section>
   );
 }
