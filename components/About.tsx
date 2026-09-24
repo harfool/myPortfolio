@@ -11,12 +11,39 @@ const container = {
   },
 };
 
+const staggerFast = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.05 },
+  },
+};
+
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   show: {
     opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
+const fadeUpScale = {
+  hidden: { opacity: 0, y: 32, scale: 0.96 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
+const chip = {
+  hidden: { opacity: 0, y: 10, scale: 0.9 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
 
@@ -61,7 +88,7 @@ export default function About() {
         variants={container}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.1 }}
+        viewport={{ once: true, amount: 0.2 }}
         className="mx-auto max-w-6xl"
       >
         {/* Eyebrow + huge heading */}
@@ -78,7 +105,7 @@ export default function About() {
         </motion.div>
 
         <motion.h2
-          variants={fadeUp}
+          variants={fadeUpScale}
           className="mt-6 text-[10vw] font-black uppercase leading-[0.9] tracking-tight sm:text-6xl lg:text-7xl"
         >
           Founder.
@@ -99,16 +126,20 @@ export default function About() {
 
         {/* Stats strip */}
         <motion.div
-          variants={fadeUp}
+          variants={staggerFast}
           className="mt-14 grid grid-cols-2 gap-px overflow-hidden border border-black bg-black sm:grid-cols-4"
         >
           {STATS.map((stat) => (
-            <div key={stat.label} className="bg-white p-6">
+            <motion.div
+              key={stat.label}
+              variants={fadeUpScale}
+              className="bg-white p-6"
+            >
               <CountUp value={stat.value} />
               <p className="mt-1 text-xs text-black/60 sm:text-sm">
                 {stat.label}
               </p>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
 
@@ -125,16 +156,23 @@ export default function About() {
               code-splitting, and picked up Node, PostgreSQL, and Prisma along
               the way to ship full-stack when a project calls for it.
             </p>
-            <div className="mt-8 flex flex-wrap gap-2">
+            <motion.div
+              variants={staggerFast}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.6 }}
+              className="mt-8 flex flex-wrap gap-2"
+            >
               {FOCUS_AREAS.map((area) => (
-                <span
+                <motion.span
                   key={area}
+                  variants={chip}
                   className="rounded-full border border-black px-4 py-2 text-xs font-medium sm:text-sm"
                 >
                   {area}
-                </span>
+                </motion.span>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -146,7 +184,16 @@ export default function About() {
                 Status
               </h3>
               <div className="mt-4 flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                <motion.span
+                  initial={{ scale: 0.6, opacity: 0 }}
+                  whileInView={{
+                    scale: [0.6, 1.3, 1],
+                    opacity: 1,
+                    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+                  }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  className="h-2.5 w-2.5 rounded-full bg-emerald-400"
+                />
                 <p className="text-lg font-bold sm:text-xl">
                   Available for freelance
                 </p>
@@ -156,12 +203,14 @@ export default function About() {
                 working with clients worldwide.
               </p>
             </div>
-            <a
+            <motion.a
               href="#contact"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.96 }}
               className="mt-10 inline-flex w-fit items-center gap-1 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5"
             >
               Let&apos;s talk ↗
-            </a>
+            </motion.a>
           </motion.div>
         </div>
 
@@ -170,16 +219,23 @@ export default function About() {
           <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-black/60">
             Tech stack
           </h3>
-          <div className="mt-5 flex flex-wrap gap-3">
+          <motion.div
+            variants={staggerFast}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.4 }}
+            className="mt-5 flex flex-wrap gap-3"
+          >
             {TECH_STACK.map((tech) => (
-              <span
+              <motion.span
                 key={tech}
+                variants={chip}
                 className="rounded-full border border-black/10 px-4 py-2 text-sm font-medium transition hover:border-black hover:bg-black hover:text-white"
               >
                 {tech}
-              </span>
+              </motion.span>
             ))}
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Proficiency - horizontal meters */}
@@ -189,7 +245,13 @@ export default function About() {
           </h3>
         </motion.div>
 
-        <motion.div variants={container} className="mt-5 space-y-10">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-5 space-y-10"
+        >
           {PROFICIENCY.map((p) => (
             <motion.div key={p.level} variants={fadeUp}>
               <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -211,16 +273,23 @@ export default function About() {
                 />
               </div>
 
-              <div className="mt-4 flex flex-wrap gap-2">
+              <motion.div
+                variants={staggerFast}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.6 }}
+                className="mt-4 flex flex-wrap gap-2"
+              >
                 {p.skills.map((skill) => (
-                  <span
+                  <motion.span
                     key={skill}
+                    variants={chip}
                     className="rounded-full border border-black/10 px-3 py-1 text-xs font-medium"
                   >
                     {skill}
-                  </span>
+                  </motion.span>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
           ))}
         </motion.div>
