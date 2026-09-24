@@ -5,18 +5,64 @@ import { motion, AnimatePresence, useScroll } from "framer-motion";
 import Image from "next/image";
 import { PROJECTS } from "@/lib/data";
 
+const container = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const staggerFast = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.05 },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
+const fadeUpScale = {
+  hidden: { opacity: 0, y: 32, scale: 0.96 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
+const chip = {
+  hidden: { opacity: 0, y: 10, scale: 0.9 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
 export default function Work() {
   return (
     <section
       id="work"
       className="scroll-mt-20 lg:scroll-mt-26 bg-white px-6 py-10 text-black sm:px-10 lg:px-16 lg:pt-4"
     >
-      <div className="mx-auto max-w-6xl">
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        className="mx-auto max-w-6xl"
+      >
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          variants={fadeUp}
           className="flex items-baseline justify-between gap-4"
         >
           <span className="font-mono text-xs uppercase tracking-[0.3em] text-black/40">
@@ -28,15 +74,12 @@ export default function Work() {
         </motion.div>
 
         <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+          variants={fadeUpScale}
           className="mt-4 text-4xl font-black uppercase tracking-tight sm:text-5xl lg:text-6xl"
         >
           Featured work
         </motion.h2>
-      </div>
+      </motion.div>
 
       {/* Desktop — scroll-driven sticky media + flowing text */}
       <div className="mx-auto hidden max-w-6xl lg:block">
@@ -68,7 +111,13 @@ function ScrollytellingWork() {
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         {/* Sticky media panel */}
         <div className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center">
-          <div className="w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 24, scale: 0.97 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full"
+          >
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.75rem] shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
               <AnimatePresence>
                 <motion.div
@@ -91,7 +140,13 @@ function ScrollytellingWork() {
             </div>
 
             {/* Full-width scroll-progress bar */}
-            <div className="mt-4 flex items-center gap-3">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="mt-4 flex items-center gap-3"
+            >
               <span className="font-mono text-[10px] font-medium text-black/50">
                 {activeProject.index}
               </span>
@@ -101,8 +156,8 @@ function ScrollytellingWork() {
                   className="h-full w-full rounded-full bg-black"
                 />
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
 
         {/* Flowing text column */}
@@ -158,35 +213,58 @@ function TextBlock({
       transition={{ duration: 0.4 }}
       className="flex min-h-[90vh] flex-col justify-center py-10"
     >
-      <span className="font-mono text-xs tracking-[0.24em] text-black/40uppercase">
-        {project.index} · {project.tagline}
-      </span>
-      <h3 className="mt-4 text-2xl font-bold sm:text-3xl lg:text-4xl">
-        {project.title}
-      </h3>
-      <p className="mt-5 max-w-md text-sm leading-relaxed text-black/70 sm:text-base">
-        {project.description}
-      </p>
-
-      <div className="mt-6 flex flex-wrap gap-2">
-        {project.stack.map((tech) => (
-          <span
-            key={tech}
-            className="rounded-full border border-black/15 px-3 py-1 text-xs font-medium text-black/70"
-          >
-            {tech}
-          </span>
-        ))}
-      </div>
-
-      <a
-        href={project.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group mt-8 inline-flex w-fit items-center gap-2 rounded-full border border-black/15 px-4 py-2 text-sm font-semibold text-black transition hover:bg-black hover:text-white"
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
       >
-        Know more ↗
-      </a>
+        <motion.span
+          variants={fadeUp}
+          className="font-mono text-xs tracking-[0.24em] text-black/40uppercase"
+        >
+          {project.index} · {project.tagline}
+        </motion.span>
+        <motion.h3
+          variants={fadeUpScale}
+          className="mt-4 text-2xl font-bold sm:text-3xl lg:text-4xl"
+        >
+          {project.title}
+        </motion.h3>
+        <motion.p
+          variants={fadeUp}
+          className="mt-5 max-w-md text-sm leading-relaxed text-black/70 sm:text-base"
+        >
+          {project.description}
+        </motion.p>
+
+        <motion.div
+          variants={staggerFast}
+          className="mt-6 flex flex-wrap gap-2"
+        >
+          {project.stack.map((tech) => (
+            <motion.span
+              key={tech}
+              variants={chip}
+              className="rounded-full border border-black/15 px-3 py-1 text-xs font-medium text-black/70"
+            >
+              {tech}
+            </motion.span>
+          ))}
+        </motion.div>
+
+        <motion.a
+          variants={fadeUp}
+          href={project.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.96 }}
+          className="group mt-8 inline-flex w-fit items-center gap-2 rounded-full border border-black/15 px-4 py-2 text-sm font-semibold text-black transition hover:bg-black hover:text-white"
+        >
+          Know more ↗
+        </motion.a>
+      </motion.div>
     </motion.div>
   );
 }
@@ -198,16 +276,22 @@ function MobileProjectCard({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      variants={container}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.2 }}
       className="flex flex-col"
     >
-      <span className="mb-6 font-mono text-xs tracking-[0.24em] text-black/40 uppercase">
+      <motion.span
+        variants={fadeUp}
+        className="mb-6 font-mono text-xs tracking-[0.24em] text-black/40 uppercase"
+      >
         {project.index} · {project.tagline}
-      </span>
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-[0_16px_40px_rgba(0,0,0,0.1)]">
+      </motion.span>
+      <motion.div
+        variants={fadeUpScale}
+        className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-[0_16px_40px_rgba(0,0,0,0.1)]"
+      >
         <Image
           src={project.image}
           alt={project.title}
@@ -215,33 +299,45 @@ function MobileProjectCard({
           sizes="100vw"
           className="object-cover"
         />
-      </div>
+      </motion.div>
 
       <div className="mt-6">
-        <h3 className="mt-3 text-2xl font-bold">{project.title}</h3>
-        <p className="mt-4 text-sm leading-relaxed text-black/70">
+        <motion.h3 variants={fadeUp} className="mt-3 text-2xl font-bold">
+          {project.title}
+        </motion.h3>
+        <motion.p
+          variants={fadeUp}
+          className="mt-4 text-sm leading-relaxed text-black/70"
+        >
           {project.description}
-        </p>
+        </motion.p>
 
-        <div className="mt-5 flex flex-wrap gap-2">
+        <motion.div
+          variants={staggerFast}
+          className="mt-5 flex flex-wrap gap-2"
+        >
           {project.stack.map((tech) => (
-            <span
+            <motion.span
               key={tech}
+              variants={chip}
               className="rounded-full border border-black/15 px-3 py-1 text-xs font-medium text-black/70"
             >
               {tech}
-            </span>
+            </motion.span>
           ))}
-        </div>
+        </motion.div>
 
-        <a
+        <motion.a
+          variants={fadeUp}
           href={project.href}
           target="_blank"
           rel="noopener noreferrer"
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.96 }}
           className="group mt-6 inline-flex w-fit items-center gap-2 rounded-full border border-black/15 px-4 py-2 text-sm font-semibold text-black transition hover:bg-black hover:text-white"
         >
           Know more ↗
-        </a>
+        </motion.a>
       </div>
     </motion.div>
   );
