@@ -11,6 +11,7 @@ import CopyEmailMarquee from "@/components/CopyEmailMarquee";
 import Contact from "@/components/Contact";
 import Loader from "@/components/Loader";
 import ScrollToTop from "@/components/ScrollToTop";
+import BigStatementReveal from "@/components/BigStatementReveal";
 
 export default function Home() {
   const isReady = usePageReady(2800);
@@ -35,6 +36,7 @@ export default function Home() {
       <Experience />
       <CopyEmailMarquee />
       <Contact />
+      <BigStatementReveal />
     </>
   );
 }

@@ -6,6 +6,7 @@ import {
   CONTACT_LINKS,
   QUICK_LINKS,
 } from "@/lib/data";
+import Link from "next/link";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -14,25 +15,20 @@ export default function Footer() {
     <footer className="relative overflow-hidden bg-white text-black">
       <div className="relative mx-auto max-w-6xl px-4 pt-10 pb-10 sm:px-6 lg:pt-28 lg:pt-32 xl:px-0">
         {/* Top: name + CTA */}
-        <div className="flex flex-col gap-8 border-b border-black pb-14 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <span className="font-mono text-xs uppercase tracking-[0.3em] text-black/40">
-              Harfool Gurjar
-            </span>
-            <h2 className="mt-4 max-w-lg text-3xl font-black uppercase leading-[1.05] tracking-tight sm:text-4xl lg:text-5xl">
-              Got an idea? Let&apos;s make it real.
-            </h2>
-          </div>
-
-          <a
-            href="#contact"
-            className="group inline-flex w-fit items-center gap-2 rounded-full bg-black px-6 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5"
-          >
-            Start a project
-            <span className="transition-transform group-hover:translate-x-1">
-              ↗
-            </span>
-          </a>
+        <div className=" border-b pb-5 flex items-center gap-4 justify-between border-black flex">
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              alt="Harfool Gurjar home"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+          </Link>
+          <span className="text-xs md:text-sm">
+            I believe great work is shaped by bold ideas, messy drafts, late
+            nights, and relentless refinement.
+          </span>
         </div>
 
         {/* Middle: info grid */}
