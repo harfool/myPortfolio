@@ -72,7 +72,7 @@ export default function BigStatementReveal() {
 
   return (
     <div ref={wrapperRef} className="relative h-[190vh] bg-white">
-      <div className="sticky top-0 flex h-[100dvh] flex-col items-center justify-center overflow-hidden px-6">
+      <div className="sticky top-0 flex h-svh flex-col items-center justify-center overflow-hidden px-6">
         <motion.span
           style={{
             opacity: useTransform(scrollYProgress, [0, 0.08], [0, 1]),
@@ -105,15 +105,19 @@ export default function BigStatementReveal() {
           style={{ opacity: buttonOpacity, y: buttonY }}
           className="pointer-events-none mt-10 sm:mt-14"
         >
-          <Link
-            href="#contact"
-            className="pointer-events-auto group inline-flex items-center gap-2 rounded-full bg-black px-7 py-4 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+          <button
+            onClick={() => {
+              document
+                .getElementById("contact")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="pointer-events-auto group inline-flex cursor-pointer items-center gap-2 rounded-full bg-black px-7 py-4 text-sm font-semibold text-white transition hover:-translate-y-0.5"
           >
             Start a project
             <span className="transition-transform group-hover:translate-x-1">
               ↗
             </span>
-          </Link>
+          </button>
         </motion.div>
       </div>
     </div>

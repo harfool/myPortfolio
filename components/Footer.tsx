@@ -87,20 +87,28 @@ export default function Footer() {
               Elsewhere
             </p>
             <div className="mt-4 flex flex-col gap-2">
-              {FOOTER_SOCIALS.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex w-fit items-center gap-1 text-sm text-black/70 transition hover:text-black"
-                >
-                  {social.label}
-                  <span className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
-                    ↗
-                  </span>
-                </a>
-              ))}
+              {FOOTER_SOCIALS.map((social) => {
+                const isProtocolLink =
+                  social.href.startsWith("mailto:") ||
+                  social.href.startsWith("tel:");
+
+                return (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    {...(!isProtocolLink && {
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                    })}
+                    className="group flex w-fit items-center gap-1 text-sm text-black/70 transition hover:text-black"
+                  >
+                    {social.label}
+                    <span className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
+                      ↗
+                    </span>
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>

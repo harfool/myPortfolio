@@ -36,9 +36,15 @@ const mobileSlot = (satelliteIndex: number) => {
   return { x: Math.cos(angle), y: Math.sin(angle) };
 };
 
-/* ================= SMALL CLUSTER (mobile + tablet) =================
-   Same radial idea as desktop: active logo dead center, satellites
-   arced above/around it, all absolutely positioned so nothing clips. */
+/* Shared entrance animation — triggers at 20% visibility */
+const reveal = (delay: number = 0) => ({
+  initial: { opacity: 0, scale: 0.5, filter: "blur(8px)" },
+  whileInView: { opacity: 1, scale: 1, filter: "blur(0px)" },
+  viewport: { once: true, amount: 0.2 },
+  transition: { type: "spring" as const, stiffness: 180, damping: 22, delay },
+});
+
+/* ================= SMALL CLUSTER (mobile + tablet) ================= */
 function SmallCluster({
   active,
   onSelect,
@@ -73,7 +79,10 @@ function SmallCluster({
             }}
             transition={{ type: "spring", stiffness: 240, damping: 24 }}
           >
-            <div className="-translate-x-1/2 -translate-y-1/2">
+            <motion.div
+              className="-translate-x-1/2 -translate-y-1/2"
+              {...reveal(i * 0.08)}
+            >
               <div
                 className={`relative flex items-center justify-center rounded-full bg-white shadow-[0_8px_24px_rgba(0,0,0,0.12)] ${
                   isActive
@@ -91,7 +100,7 @@ function SmallCluster({
                   />
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.button>
         );
       })}
@@ -99,7 +108,7 @@ function SmallCluster({
   );
 }
 
-/* ================= DESKTOP CLUSTER (unchanged) ================= */
+/* ================= DESKTOP CLUSTER  ================= */
 function DesktopCluster({
   active,
   onSelect,
@@ -133,7 +142,10 @@ function DesktopCluster({
             }}
             transition={{ type: "spring", stiffness: 220, damping: 24 }}
           >
-            <div className="-translate-x-1/2 -translate-y-1/2">
+            <motion.div
+              className="-translate-x-1/2 -translate-y-1/2"
+              {...reveal(i * 0.07)}
+            >
               <div className="relative flex h-28 w-28 items-center justify-center overflow-hidden rounded-full bg-white p-4 shadow-[0_8px_24px_rgba(0,0,0,0.12)] sm:h-42 sm:w-42 sm:p-6">
                 <div className="relative h-full w-full">
                   <Image
@@ -145,7 +157,7 @@ function DesktopCluster({
                   />
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.button>
         );
       })}
@@ -193,7 +205,7 @@ export default function Service() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="flex items-baseline justify-between gap-4"
         >
@@ -208,7 +220,7 @@ export default function Service() {
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
           className="mt-4 text-4xl font-black uppercase tracking-tight sm:text-5xl lg:text-6xl"
         >
@@ -226,7 +238,13 @@ export default function Service() {
             <DesktopCluster active={active} onSelect={setActive} />
           </div>
 
-          <div className="flex flex-col justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            className="flex flex-col justify-center"
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeService.title}
@@ -272,7 +290,7 @@ export default function Service() {
                 </div>
               </motion.div>
             </AnimatePresence>
-          </div>
+          </motion.div>
         </div>
       </div>
     </motion.section>

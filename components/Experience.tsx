@@ -18,6 +18,40 @@ const container = {
   show: { transition: { staggerChildren: 0.15 } },
 };
 
+const dot = {
+  hidden: { scale: 0, opacity: 0 },
+  show: {
+    scale: 1,
+    opacity: 1,
+    transition: { type: "spring" as const, stiffness: 320, damping: 20 },
+  },
+};
+
+const chip = {
+  hidden: { opacity: 0, x: 16 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
+const listContainer = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.06, delayChildren: 0.15 },
+  },
+};
+
+const listItem = {
+  hidden: { opacity: 0, x: -14 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
 const tagContainer = {
   hidden: {},
   show: { transition: { staggerChildren: 0.04 } },
@@ -53,7 +87,7 @@ export default function Experience() {
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.4 }}
+          viewport={{ once: true, amount: 0.2 }}
           className="flex items-baseline justify-between gap-4"
         >
           <span className="font-mono text-xs uppercase tracking-[0.3em] text-black/40">
@@ -65,7 +99,7 @@ export default function Experience() {
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.4 }}
+          viewport={{ once: true, amount: 0.2 }}
           className="mt-4 text-4xl font-black uppercase tracking-tight sm:text-5xl lg:text-6xl"
         >
           Where I&apos;ve worked
@@ -85,13 +119,16 @@ export default function Experience() {
             variants={container}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.15 }}
+            viewport={{ once: true, amount: 0.2 }}
             className="space-y-16"
           >
             {EXPERIENCE.map((job) => (
               <motion.div key={job.role} variants={fadeUp} className="relative">
                 {/* Dot */}
-                <span className="absolute -left-8 top-2 flex h-3 w-3 -translate-x-1/2 items-center justify-center sm:-left-12">
+                <motion.span
+                  variants={dot}
+                  className="absolute -left-8 top-2 flex h-3 w-3 -translate-x-1/2 items-center justify-center sm:-left-12"
+                >
                   <span
                     className={`h-3 w-3 rounded-full border-2 border-black ${
                       job.current ? "bg-black" : "bg-white"
@@ -100,7 +137,7 @@ export default function Experience() {
                   {job.current && (
                     <span className="absolute h-3 w-3 animate-ping rounded-full bg-black/40" />
                   )}
-                </span>
+                </motion.span>
 
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
@@ -111,28 +148,38 @@ export default function Experience() {
                       {job.org} &middot; {job.location}
                     </p>
                   </div>
-                  <span className="rounded-full border border-black px-3 py-1 text-xs font-medium whitespace-nowrap">
+                  <motion.span
+                    variants={chip}
+                    className="rounded-full border border-black px-3 py-1 text-xs font-medium whitespace-nowrap"
+                  >
                     {job.period}
-                  </span>
+                  </motion.span>
                 </div>
 
-                <ul className="mt-5 space-y-2.5">
+                <motion.ul
+                  variants={listContainer}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.2 }}
+                  className="mt-5 space-y-2.5"
+                >
                   {job.points.map((point) => (
-                    <li
+                    <motion.li
                       key={point}
+                      variants={listItem}
                       className="flex gap-3 text-sm leading-relaxed text-black/75 sm:text-base"
                     >
                       <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-black/40" />
                       {point}
-                    </li>
+                    </motion.li>
                   ))}
-                </ul>
+                </motion.ul>
 
                 <motion.div
                   variants={tagContainer}
                   initial="hidden"
                   whileInView="show"
-                  viewport={{ once: true, amount: 0.5 }}
+                  viewport={{ once: true, amount: 0.2 }}
                   className="mt-6 flex flex-wrap gap-2"
                 >
                   {job.stack.map((tech) => (

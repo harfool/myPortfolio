@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { CONTACT_LINKS } from "@/lib/data";
 
+const WHATSAPP_NUMBER = "919610237965";
+
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   show: {
@@ -20,6 +22,35 @@ const container = {
 
 export default function Contact() {
   const [focused, setFocused] = useState<string | null>(null);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleChange =
+    (field: keyof typeof form) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setForm((prev) => ({ ...prev, [field]: e.target.value }));
+    };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const lines = [
+      `*New project inquiry*`,
+      form.name && `Name: ${form.name}`,
+      form.email && `Email: ${form.email}`,
+      form.subject && `Subject: ${form.subject}`,
+      form.message && `Message: ${form.message}`,
+    ].filter(Boolean);
+
+    const text = encodeURIComponent(lines.join("\n"));
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <section id="contact" className="py-10 lg:py-20 bg-white text-black">
@@ -69,31 +100,41 @@ export default function Contact() {
           </motion.div>
 
           <div className="mt-14 space-y-0 border-t border-white/15">
-            {CONTACT_LINKS.map((link, i) => (
-              <motion.a
-                key={link.label}
-                variants={fadeUp}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-between border-b border-white/15 py-5 transition-colors hover:bg-white/5"
-              >
-                <div className="flex items-baseline gap-4">
-                  <span className="font-mono text-xs text-white/30">
-                    {String(i + 1).padStart(2, "0")}
+            {CONTACT_LINKS.map((link, i) => {
+              const isProtocolLink =
+                link.href.startsWith("mailto:") || link.href.startsWith("tel:");
+
+              return (
+                <motion.a
+                  key={link.label}
+                  variants={fadeUp}
+                  href={link.href}
+                  // Protocol links (mailto:/tel:) hand off to another app —
+                  // opening them in a new tab just leaves a blank tab behind.
+                  // Only real webpage links should open in a new tab.
+                  {...(!isProtocolLink && {
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                  })}
+                  className="group flex items-center justify-between border-b border-white/15 py-5 transition-colors hover:bg-white/5"
+                >
+                  <div className="flex items-baseline gap-4">
+                    <span className="font-mono text-xs text-white/30">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-sm font-bold uppercase tracking-wide sm:text-base">
+                      {link.label}
+                    </span>
+                  </div>
+                  <span className="flex items-center gap-2 text-sm text-white/60 transition-colors group-hover:text-white">
+                    {link.value}
+                    <span className="transition-transform group-hover:translate-x-1">
+                      ↗
+                    </span>
                   </span>
-                  <span className="text-sm font-bold uppercase tracking-wide sm:text-base">
-                    {link.label}
-                  </span>
-                </div>
-                <span className="flex items-center gap-2 text-sm text-white/60 transition-colors group-hover:text-white">
-                  {link.value}
-                  <span className="transition-transform group-hover:translate-x-1">
-                    ↗
-                  </span>
-                </span>
-              </motion.a>
-            ))}
+                </motion.a>
+              );
+            })}
           </div>
         </motion.div>
 
@@ -112,11 +153,13 @@ export default function Contact() {
             Send a message
           </motion.span>
 
-          <form className="mt-10 space-y-10">
+          <form onSubmit={handleSubmit} className="mt-10 space-y-10">
             <FormField
               id="name"
               label="Your name"
               placeholder="Harfool Gurjar"
+              value={form.name}
+              onChange={handleChange("name")}
               focused={focused}
               setFocused={setFocused}
             />
@@ -125,6 +168,8 @@ export default function Contact() {
               label="Email address"
               type="email"
               placeholder="you@example.com"
+              value={form.email}
+              onChange={handleChange("email")}
               focused={focused}
               setFocused={setFocused}
             />
@@ -132,6 +177,8 @@ export default function Contact() {
               id="subject"
               label="Subject"
               placeholder="Project inquiry, collaboration, etc."
+              value={form.subject}
+              onChange={handleChange("subject")}
               focused={focused}
               setFocused={setFocused}
             />
@@ -139,6 +186,8 @@ export default function Contact() {
               id="message"
               label="Message"
               placeholder="Tell me about your project, timeline, and budget..."
+              value={form.message}
+              onChange={handleChange("message")}
               focused={focused}
               setFocused={setFocused}
               textarea
@@ -168,6 +217,8 @@ function FormField({
   label,
   placeholder,
   type = "text",
+  value,
+  onChange,
   focused,
   setFocused,
   textarea = false,
@@ -176,6 +227,10 @@ function FormField({
   label: string;
   placeholder: string;
   type?: string;
+  value: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
   focused: string | null;
   setFocused: (id: string | null) => void;
   textarea?: boolean;
@@ -196,8 +251,11 @@ function FormField({
       {textarea ? (
         <textarea
           id={id}
+          name={id}
           rows={3}
           placeholder={placeholder}
+          value={value}
+          onChange={onChange}
           onFocus={() => setFocused(id)}
           onBlur={() => setFocused(null)}
           className="mt-3 block w-full resize-none border-b border-black/15 bg-transparent pb-3 text-base outline-none placeholder:text-black/30 sm:text-lg"
@@ -205,8 +263,11 @@ function FormField({
       ) : (
         <input
           id={id}
+          name={id}
           type={type}
           placeholder={placeholder}
+          value={value}
+          onChange={onChange}
           onFocus={() => setFocused(id)}
           onBlur={() => setFocused(null)}
           className="mt-3 w-full border-b border-black/15 bg-transparent pb-3 text-base outline-none placeholder:text-black/30 sm:text-lg"

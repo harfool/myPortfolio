@@ -89,12 +89,16 @@ export default function Header() {
 
         <div className="flex items-center gap-2">
           {/* CTA */}
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-1 rounded-full bg-black px-4 py-2 text-xs font-semibold text-white transition hover:-translate-y-0.5 sm:px-5 sm:py-2.5 sm:text-sm"
+          <button
+            onClick={() => {
+              document
+                .getElementById("contact")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="inline-flex cursor-pointer items-center gap-1 rounded-full bg-black px-4 py-2 text-xs font-semibold text-white transition hover:-translate-y-0.5 sm:px-5 sm:py-2.5 sm:text-sm"
           >
             Let&apos;s Talk ↗
-          </a>
+          </button>
 
           {/* Mobile hamburger */}
           <button

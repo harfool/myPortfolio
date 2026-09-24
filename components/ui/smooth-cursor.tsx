@@ -16,8 +16,16 @@ export function CursorTrail({
 }: CursorTrailProps) {
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(true);
 
   useEffect(() => {
+    const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+    setIsTouchDevice(!hasFinePointer);
+  }, []);
+
+  useEffect(() => {
+    if (isTouchDevice) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       setCoords({ x: e.clientX, y: e.clientY });
       if (!isVisible) setIsVisible(true);
@@ -34,9 +42,10 @@ export function CursorTrail({
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [isVisible]);
+  }, [isVisible, isTouchDevice]);
 
-  // Create an array of springs, each following the one in front of it
+  if (isTouchDevice) return null;
+
   return (
     <>
       {isVisible &&
