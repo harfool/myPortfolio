@@ -81,3 +81,17 @@ html {
   scrollbar-width: thin;
   scrollbar-color: #000 transparent;
 }
+
+.folder-notch {
+  --notch-w: 6rem;
+  --notch-h: 1rem;
+  --notch-x: 1.5rem;
+  mask:
+    radial-gradient(
+        circle 12px at var(--notch-x) 0,
+        transparent 12px,
+        black 12.5px
+      )
+      no-repeat,
+    linear-gradient(black, black);
+}

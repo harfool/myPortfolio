@@ -5,17 +5,6 @@ export const FOCUS_AREAS = [
   "Pixel-accurate UI",
 ];
 
-export const TECH_STACK = [
-  "React.js",
-  "Next.js",
-  "TypeScript",
-  "Tailwind CSS",
-  "Framer Motion",
-  "Node.js",
-  "Prisma",
-  "Figma",
-];
-
 export const STATS = [
   { value: "10+", label: "Months in production" },
   { value: "20+", label: "Projects shipped" },
@@ -23,26 +12,80 @@ export const STATS = [
   { value: "100%", label: "Responsive builds" },
 ];
 
-export const PROFICIENCY = [
+export type StackCardData = {
+  name: string;
+  level: "Expert" | "Proficient" | "Learning";
+  desc: string;
+};
+
+export const STACK_CARDS: StackCardData[] = [
   {
+    name: "React.js",
     level: "Expert",
-    meter: 90,
-    desc: "Advanced proficiency with deep understanding",
-    skills: ["React.js", "JavaScript (ES6+)", "Tailwind CSS"],
+    desc: "Component architecture, hooks, and performance patterns for production UI.",
   },
   {
+    name: "JavaScript (ES6+)",
+    level: "Expert",
+    desc: "Modern syntax, async patterns, and clean logic across the stack.",
+  },
+  {
+    name: "Tailwind CSS",
+    level: "Expert",
+    desc: "Utility-first styling for fast, consistent, responsive interfaces.",
+  },
+  {
+    name: "Next.js",
+    level: "Expert",
+    desc: "App Router, server components, and full-stack routing at scale.",
+  },
+  {
+    name: "TypeScript",
+    level: "Expert",
+    desc: "Type-safe code that catches bugs before they ship.",
+  },
+  {
+    name: "Framer Motion",
+    level: "Expert",
+    desc: "Scroll-driven and gesture-based animation, tuned for performance.",
+  },
+  {
+    name: "Redux Toolkit",
     level: "Proficient",
-    meter: 65,
-    desc: "Strong working knowledge and experience",
-    skills: ["Redux Toolkit", "Node.js", "MongoDB"],
+    desc: "Predictable state management for complex, data-heavy apps.",
   },
   {
+    name: "Node.js",
+    level: "Proficient",
+    desc: "Server-side JavaScript for APIs, tooling, and backend logic.",
+  },
+  {
+    name: "MongoDB",
+    level: "Proficient",
+    desc: "Schema design and queries for flexible, document-based data.",
+  },
+  {
+    name: "Docker",
     level: "Learning",
-    meter: 30,
-    desc: "Actively learning and gaining experience",
-    skills: ["Docker", "PostgreSQL", "Prisma ORM"],
+    desc: "Containerizing apps for consistent local and deployed environments.",
+  },
+  {
+    name: "PostgreSQL",
+    level: "Learning",
+    desc: "Relational schema design and query optimization.",
+  },
+  {
+    name: "Prisma ORM",
+    level: "Learning",
+    desc: "Type-safe database access layered over SQL.",
   },
 ];
+
+export const CARD_STYLES: Record<StackCardData["level"], string> = {
+  Expert: "bg-black text-white border-black",
+  Proficient: "bg-black text-white border-black",
+  Learning: "bg-black text-white border-black",
+};
 
 export const CONTACT_LINKS = [
   {
