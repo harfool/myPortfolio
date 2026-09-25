@@ -239,16 +239,16 @@ export const EXPERIENCE = [
 export const SERVICES = [
   {
     index: "01",
-    title: "Full-Stack Development",
-    tagline: "Production-grade apps, database to deploy",
+    title: "Web Development",
+    tagline: "Production-grade sites, database to deploy",
     description:
-      "End-to-end product builds on modern stacks - typed APIs, clean data models, and frontends structured to scale past the first release instead of needing a rewrite.",
+      "End-to-end web builds on modern stacks - typed APIs, clean data models, and frontends structured to scale past the first release instead of needing a rewrite.",
     deliverables: [
       "Next.js / React applications with typed APIs",
       "Database design (PostgreSQL, MongoDB) and auth",
       "Cloud deployment and CI/CD pipelines",
     ],
-    logo: "/images/services/full-stack.png",
+    logo: "/images/services/web-dev.png",
   },
   {
     index: "02",
@@ -278,16 +278,16 @@ export const SERVICES = [
   },
   {
     index: "04",
-    title: "Web Design & UI/UX",
-    tagline: "Interfaces judged by usability first",
+    title: "Mobile Development",
+    tagline: "Cross-platform apps, built to ship on both stores",
     description:
-      "Design work rooted in clarity and conversion, not decoration - every screen earns its place, backed by a system that stays consistent as the product grows.",
+      "Native-feeling mobile apps from a single React Native/Expo codebase - built for real devices and real usage, not a demo that only runs in a simulator.",
     deliverables: [
-      "Wireframes, prototypes, and design systems",
-      "Responsive, accessible interface design",
-      "Figma-to-code handoff and design QA",
+      "Cross-platform apps (iOS and Android) from one codebase",
+      "App Store and Google Play submission and release",
+      "Push notifications, offline support, and native integrations",
     ],
-    logo: "/images/services/web-design-uiux.png",
+    logo: "/images/services/mobile-dev.png",
   },
 ];
 
