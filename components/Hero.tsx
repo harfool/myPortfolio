@@ -61,10 +61,12 @@ export default function Hero({ isLoaded }: HeroProps) {
 
   const imageY = useTransform(smoothProgress, [0, 0.4], [0, -140]);
   const contentY = useTransform(smoothProgress, [0, 0.4], [0, -180]);
-  const mobileImageY = useTransform(mobileSmoothProgress, [0, 0.4], [0, -100]);
+  const mobileImageY = useTransform(mobileSmoothProgress, [0, 0.4], [0, -80]);
 
   return (
-    <main className="min-h-svh overflow-y-auto bg-white text-black sm:h-svh sm:overflow-hidden">
+    /* No overflow container on mobile — the body scrolls, so an inner
+       scrollbar can never appear. Desktop keeps its pinned layout. */
+    <main className="min-h-svh bg-white text-black lg:h-svh lg:overflow-hidden">
       {/* ---------- Desktop  ---------- */}
       <motion.section
         ref={sectionRef}
@@ -75,12 +77,12 @@ export default function Hero({ isLoaded }: HeroProps) {
       >
         <motion.h1
           variants={fadeUp}
-          className="absolute inset-x-0 top-[10%] z-0 flex flex-col select-none items-center justify-between whitespace-nowrap px-4 sm:px-10"
+          className="absolute inset-x-0 top-[10%] z-0 flex select-none flex-col items-center justify-between whitespace-nowrap px-4 sm:px-10"
         >
           <span className="[font-family:var(--font-display)] text-[10vw] font-black uppercase leading-none tracking-[-0.02em] text-transparent [-webkit-text-stroke:1.5px_#000] sm:[-webkit-text-stroke:2px_#000]">
             Harfool
           </span>
-          <span className="font-[var(--font-display)] text-[10vw] font-black uppercase leading-none tracking-[-0.02em] text-black">
+          <span className="[font-family:var(--font-display)] text-[10vw] font-black uppercase leading-none tracking-[-0.02em] text-black">
             Gurjar
           </span>
         </motion.h1>
@@ -90,7 +92,7 @@ export default function Hero({ isLoaded }: HeroProps) {
           animate={isLoaded ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
           style={{ translateY: imageY }}
-          className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-[52svh] w-auto -translate-x-1/2 sm:h-[64svh] will-change-transform"
+          className="pointer-events-none absolute bottom-0 left-1/2 z-10 h-[52svh] w-auto -translate-x-1/2 will-change-transform sm:h-[64svh]"
         >
           <Image
             src="/images/harfool-gurjar.png"
@@ -98,7 +100,7 @@ export default function Hero({ isLoaded }: HeroProps) {
             width={800}
             height={1000}
             priority
-            className="h-full w-auto object-cover object-top grayscale pt-16"
+            className="h-full w-auto object-cover object-top pt-16 grayscale"
           />
         </motion.div>
 
@@ -109,10 +111,11 @@ export default function Hero({ isLoaded }: HeroProps) {
             className="max-w-sm will-change-transform"
           >
             <h2 className="text-xl font-bold sm:text-3xl">
-              Founder and software engineer
+              Founder & Technology Builder
             </h2>
             <p className="mt-2 max-w-xs font-mono text-xs text-black/60 sm:text-sm">
-              Building clean, fast, conversion-focused web experiences.
+              Building digital products, AI-powered solutions, and
+              growth-focused experiences through Growify India.
             </p>
             <a
               href="#contact"
@@ -125,7 +128,7 @@ export default function Hero({ isLoaded }: HeroProps) {
           <motion.div
             variants={fadeIn}
             style={{ translateY: contentY }}
-            className="hidden flex-col gap-3 sm:flex will-change-transform"
+            className="hidden flex-col gap-3 will-change-transform sm:flex"
           >
             {HERO_SOCIALS.map((s) => (
               <a
@@ -133,7 +136,7 @@ export default function Hero({ isLoaded }: HeroProps) {
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full border border-black/10 bg-white/60 px-5 py-2.5 text-sm font-medium backdrop-blur-sm transition hover:-translate-x-1 hover:border-black/30 text-center"
+                className="rounded-full border border-black/10 bg-white/60 px-5 py-2.5 text-center text-sm font-medium backdrop-blur-sm transition hover:-translate-x-1 hover:border-black/30"
               >
                 {s.label}
               </a>
@@ -142,30 +145,36 @@ export default function Hero({ isLoaded }: HeroProps) {
         </div>
       </motion.section>
 
-      {/* ---------- Mobile  ---------- */}
+      {/* ---------- Mobile / tablet  ---------- */}
       <motion.section
         ref={mobileSectionRef}
         variants={container}
         initial="hidden"
         animate={isLoaded ? "show" : "hidden"}
-        className="flex flex-col lg:hidden h-screen justify-between pt-24"
+        /* min-h-svh + justify-center + svh-based gaps:
+           fits short screens, breathes on tall screens, never clips */
+        className="flex min-h-svh flex-col items-center justify-between gap-[3svh] px-6 pt-24 lg:hidden"
       >
         <motion.div
           variants={fadeUp}
-          className="mt-2 flex select-none flex-col items-center whitespace-nowrap px-4 text-center leading-none"
+          className="flex select-none flex-col items-center whitespace-nowrap text-center leading-none"
         >
-          <span className="[font-family:var(--font-display)] text-[clamp(3rem,11vw,6rem)] font-black uppercase tracking-[-0.02em] text-transparent [-webkit-text-stroke:1.2px_#000]">
+          {/* Font scales with BOTH width and height — always fits */}
+          <span className="[font-family:var(--font-display)] text-[clamp(2.4rem,min(11vw,10svh),5.5rem)] font-black uppercase tracking-[-0.02em] text-transparent [-webkit-text-stroke:1.2px_#000]">
             Harfool
           </span>
-          <span className="[font-family:var(--font-display)] text-[clamp(3rem,11vw,6rem)] font-black uppercase tracking-[-0.02em] text-black">
+          <span className="[font-family:var(--font-display)] text-[clamp(2.4rem,min(11vw,10svh),5.5rem)] font-black uppercase tracking-[-0.02em] text-black">
             Gurjar
           </span>
         </motion.div>
 
-        <motion.div variants={fadeUp} className="px-6 pt-6 text-center">
-          <h2 className="text-2xl font-bold">Founder and software engineer</h2>
+        <motion.div variants={fadeUp} className="max-w-xs text-center">
+          <h2 className="text-xl font-bold sm:text-2xl">
+            Founder & Technology Builder
+          </h2>
           <p className="mx-auto mt-2 max-w-xs font-mono text-xs text-black/60">
-            Building clean, fast, conversion-focused web experiences.
+            Building digital products, AI-powered solutions, and growth-focused
+            experiences through Growify India.
           </p>
           <a
             href="#contact"
@@ -177,7 +186,7 @@ export default function Hero({ isLoaded }: HeroProps) {
 
         <motion.div
           variants={fadeUp}
-          className="mt-6 flex flex-wrap justify-center gap-3 px-6 pb-8"
+          className="flex flex-wrap justify-center gap-3"
         >
           {HERO_SOCIALS.map((s) => (
             <a
@@ -190,19 +199,21 @@ export default function Hero({ isLoaded }: HeroProps) {
           ))}
         </motion.div>
 
+        {/* Height in svh: image always occupies a proportional slice of
+            the viewport — never overflows, never too small */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
           style={{ translateY: mobileImageY }}
-          className="mt-3 flex justify-center px-8 will-change-transform"
+          className="flex justify-center will-change-transform"
         >
           <Image
             src="/images/harfool-gurjar.png"
             alt="Harfool Gurjar"
             width={800}
             height={1000}
-            className="max-h-[40svh] w-auto object-contain grayscale"
+            className="h-[34svh] w-auto object-contain grayscale [@media(min-height:760px)]:h-[40svh]"
           />
         </motion.div>
       </motion.section>

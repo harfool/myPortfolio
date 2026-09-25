@@ -100,6 +100,21 @@ export default function Header() {
             Let&apos;s Talk ↗
           </button>
 
+          {/* Leadership illustration link */}
+          <a
+            href="#leadership"
+            aria-label="Go to leadership section"
+            className="flex h-9 w-9 shrink-0 items-center justify-center transition hover:-translate-y-0.5"
+          >
+            <Image
+              src="/images/leader-illustration.png"
+              alt=""
+              width={28}
+              height={28}
+              className="h-7 w-7 object-contain"
+            />
+          </a>
+
           {/* Mobile hamburger */}
           <button
             onClick={() => setOpen((v) => !v)}
