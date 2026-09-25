@@ -72,7 +72,7 @@ export default function Contact() {
 
           <motion.h2
             variants={fadeUp}
-            className="mt-6 text-5xl font-black uppercase leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl"
+            className="mt-6 text-4xl font-black uppercase leading-[0.95] tracking-tight sm:text-5xl lg:text-6xl"
           >
             Let&apos;s
             <br />

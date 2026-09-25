@@ -158,7 +158,7 @@ function PinnedLeadership() {
             <div className="relative flex h-full w-screen shrink-0 flex-col items-center justify-center bg-white">
               <motion.h2
                 style={{ y: headingY }}
-                className="z-10 text-4xl font-black uppercase tracking-tight sm:text-5xl lg:text-7xl"
+                className="z-10 text-4xl font-black uppercase tracking-tight sm:text-5xl lg:text-6xl"
               >
                 Leadership
               </motion.h2>
@@ -237,7 +237,7 @@ function PinnedLeadership() {
 
                 <motion.h2
                   variants={fadeUp}
-                  className="mt-3 max-w-2xl text-xl font-black uppercase leading-tight tracking-tight sm:mt-4 sm:text-3xl lg:text-5xl"
+                  className="mt-3 max-w-2xl text-3xl font-black uppercase leading-tight tracking-tight sm:mt-4 sm:text-3xl lg:text-5xl"
                 >
                   What&apos;s shaping the work right now.
                 </motion.h2>
@@ -282,7 +282,7 @@ function PinnedLeadership() {
 
                 <motion.h2
                   variants={fadeUp}
-                  className="mt-3 text-3xl font-black uppercase tracking-tight sm:mt-4 sm:text-5xl lg:text-6xl"
+                  className="mt-3 text-3xl font-black uppercase tracking-tight sm:mt-4 sm:text-3xl lg:text-5xl"
                 >
                   Growify India
                 </motion.h2>

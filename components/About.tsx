@@ -128,7 +128,7 @@ export default function About() {
 
         <motion.h2
           variants={fadeUpScale}
-          className="mt-6 text-[10vw] font-black uppercase leading-[0.9] tracking-tight sm:text-6xl lg:text-7xl"
+          className="mt-6 text-4xl font-black uppercase leading-[0.9] tracking-tight sm:text-5xl lg:text-6xl"
         >
           Founder.
           <br />
