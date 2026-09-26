@@ -8,6 +8,7 @@ import {
   useTransform,
   useReducedMotion,
 } from "framer-motion";
+import { FaXTwitter, FaLinkedin, FaInstagram } from "react-icons/fa6";
 
 /* ------------------------------------------------------------------ */
 /*  Shared variants (used by the stacked fallback)                     */
@@ -87,6 +88,33 @@ const SERVICES = [
   "AI & Automation",
   "Digital Growth",
   "Product Design",
+];
+
+const SOCIALS = [
+  {
+    label: "Website",
+    href: "https://growifyindia.com/",
+    iconType: "image" as const,
+    iconSrc: "/images/icons/growify-logo.png", // adjust to your actual filename
+  },
+  {
+    label: "X",
+    href: "https://x.com/growifyindia",
+    iconType: "react-icon" as const,
+    Icon: FaXTwitter,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/growify-india",
+    iconType: "react-icon" as const,
+    Icon: FaLinkedin,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/growify_india/",
+    iconType: "react-icon" as const,
+    Icon: FaInstagram,
+  },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -313,14 +341,18 @@ function PinnedLeadership() {
 
                 <motion.div
                   variants={fadeUp}
-                  className="mt-8 flex items-center gap-4 border-t border-white/15 pt-6 sm:mt-14 sm:pt-8"
+                  className="mt-8 flex flex-col gap-4 border-t border-white/15 pt-6 sm:mt-14 sm:flex-row sm:items-center sm:justify-between sm:pt-8"
                 >
-                  <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-white/40 sm:text-xs">
-                    Founded by
-                  </span>
-                  <span className="text-sm font-semibold sm:text-lg">
-                    Harfool Gurjar
-                  </span>
+                  <div className="flex items-center gap-4">
+                    <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-white/40 sm:text-xs">
+                      Founded by
+                    </span>
+                    <span className="text-sm font-semibold sm:text-lg">
+                      Harfool Gurjar
+                    </span>
+                  </div>
+
+                  <SocialLinks variant="dark" />
                 </motion.div>
               </motion.div>
             </div>
@@ -486,6 +518,39 @@ function FoundersDesk() {
   );
 }
 
+function SocialLinks({ variant }: { variant: "dark" | "light" }) {
+  const linkStyle =
+    variant === "dark"
+      ? "border-white/20 text-white/70 hover:border-white/40 hover:text-white"
+      : "border-black/15 text-black/60 hover:border-black/30 hover:text-black";
+
+  return (
+    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+      {SOCIALS.map((social) => (
+        <a
+          key={social.label}
+          href={social.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`group flex items-center gap-1.5 rounded-full border text-[11px] font-medium uppercase tracking-wide transition group p-4 sm:text-xs ${linkStyle}`}
+        >
+          {social.iconType === "image" ? (
+            <Image
+              src={social.iconSrc}
+              alt=""
+              width={20}
+              height={20}
+              className="h-6 w-6 lg:h-8 lg:w-8 object-cover grayscale group-hover:scale-110 transition-all duration-300"
+            />
+          ) : (
+            <social.Icon className="text-xl lg:text-2xl group-hover:scale-110 transition-all duration-300" />
+          )}
+        </a>
+      ))}
+    </div>
+  );
+}
+
 function GrowifyIndia() {
   return (
     <div className="overflow-x-clip px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
@@ -535,12 +600,16 @@ function GrowifyIndia() {
 
         <motion.div
           variants={fadeUp}
-          className="mt-16 flex items-center gap-4 border-t border-black/10 pt-8"
+          className="mt-16 flex flex-col gap-6 border-t border-black/10 pt-8 sm:flex-row sm:items-center sm:justify-between"
         >
-          <span className="font-mono text-xs uppercase tracking-[0.24em] text-black/40">
-            Founded by
-          </span>
-          <span className="text-lg font-semibold">Harfool Gurjar</span>
+          <div className="flex items-center gap-4">
+            <span className="font-mono text-xs uppercase tracking-[0.24em] text-black/40">
+              Founded by
+            </span>
+            <span className="text-lg font-semibold">Harfool Gurjar</span>
+          </div>
+
+          <SocialLinks variant="light" />
         </motion.div>
       </motion.div>
     </div>
