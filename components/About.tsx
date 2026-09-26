@@ -172,11 +172,26 @@ export default function About() {
                 My journey
               </h3>
               <p className="mt-4 text-base leading-relaxed text-black/80 sm:text-lg">
-                Started freelancing in mid-2025, building production React apps
-                for small teams and founders. Since then I&apos;ve shipped 20+
-                projects, cut load times by ~40% through memoization and
-                code-splitting, and picked up Node, PostgreSQL, and Prisma along
-                the way to ship full-stack when a project calls for it.
+                I started freelancing in December 2024, building production
+                React apps for early-stage founders and small teams. Within a
+                year I'd shipped 20+ projects, cut load times by ~40% through
+                memoization and code-splitting, and picked up Node.js,
+                PostgreSQL, and Prisma to handle full-stack builds end-to-end. <br />
+
+                That freelance run became Growify India — a software development
+                agency based in Bhilwara, Rajasthan, built on one rule:
+                everything built in-house, no outsourcing. Since founding it,
+                I've shipped a website build for VFixer, a construction
+                chemicals manufacturer, giving them their first-ever digital
+                presence; a 3-month e-commerce platform with abandoned-cart
+                recovery for BuzzHub; and Huelip, a proptech escrow platform
+                built for an architect who needed to solve his own clients'
+                payment-trust problem — now live and expanding with
+                client-requested features. <br />
+                Today, Growify builds custom web,
+                mobile, SaaS, and AI-automation products for founders and
+                businesses who need software that actually ships — not just a
+                proof of concept.
               </p>
               <motion.div
                 variants={staggerFast}

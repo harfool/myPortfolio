@@ -6,8 +6,8 @@ export const FOCUS_AREAS = [
 ];
 
 export const STATS = [
-  { value: "10+", label: "Months in production" },
-  { value: "20+", label: "Projects shipped" },
+  { value: "2+", label: "Years in production" },
+  { value: "10+", label: "Projects shipped" },
   { value: "40%", label: "Avg. load-time cut" },
   { value: "100%", label: "Responsive builds" },
 ];
@@ -119,6 +119,7 @@ export const FOOTER_SERVICES = [
   "AI Automation",
   "Digital Marketing",
   "Web Design & UI/UX",
+  "Mobile App development"
 ];
 
 export const FOOTER_SOCIALS = [
@@ -138,7 +139,7 @@ export const NOTES = [
 export const NAV_LINKS = [
   { label: "About" },
   { label: "Work", count: 3 },
-  { label: "Service", count: 4 },
+  { label: "Service", count: 5 },
   { label: "Experience" },
   { label: "Contact" },
 ];
@@ -155,33 +156,43 @@ export const HERO_SOCIALS = [
 export const PROJECTS = [
   {
     index: "01",
-    title: "Zoo Management System",
-    href: "https://zms.chaipecharcha.tech/",
-    tagline: "Public site + admin dashboard for zoo operations",
+    title: "Huelip",
+    href: "https://huelip.com/", 
+    tagline: "Escrow-based proptech platform for architects",
     description:
-      "A full platform to manage zoo operations - animal records, staff, and visitor ticketing. Public site with an animal catalogue and booking flow, plus a role-based admin dashboard for owners, admins, and editors.",
-    stack: ["React", "Tailwind", "Node", "Express", "MongoDB", "JWT"],
-    image: "/images/work/zoo-management.png",
+      "A proptech platform built for an architect to solve payment-trust issues with his own clients - escrow-secured transactions, a wholesaler marketplace for building materials, personal project management for professionals, and team-member collaboration. Now live and expanding with client-requested features.",
+    stack: ["React", "Tailwind", "Node", "Express", "MongoDB"], // TODO: confirm exact stack / escrow-payment layer
+    image: "/images/work/huelip.png",
   },
   {
     index: "02",
-    title: "Marwar Saheli",
-    href: "https://marwarsaheli.com/",
-    tagline: "E-commerce platform for Rajasthani spices",
+    title: "BuzzHub",
+    href: "https://buzzhub.store/", 
+    tagline: "E-commerce platform with abandoned cart recovery",
     description:
-      "An online storefront selling authentic Rajasthani spices, built for scale - product search, reviews, lazy-loaded imagery, and a full order pipeline from cart to payment.",
-    stack: ["React", "Tailwind", "Node", "Express", "MongoDB", "Razorpay"],
-    image: "/images/work/marwar-saheli.png",
+      "An e-commerce platform built to recover lost revenue - automated abandoned-cart recovery flows designed to win back drop-off customers and lift conversion.",
+    stack: ["React", "Tailwind", "Node", "Express", "MongoDB"], // TODO: confirm exact stack / payment gateway used
+    image: "/images/work/buzzhub.png",
   },
   {
     index: "03",
-    title: "AI | Gen AI",
-    href: "https://harfool-ai.vercel.app/",
-    tagline: "Platform showcasing AI-generated content",
+    title: "VFixer Chemicals",
+    href: "https://vfixerchemical.com/",
+    tagline: "Website and digital presence for a chemicals manufacturer",
     description:
-      "A marketing and demo platform for showcasing AI-generated content and applications - clean landing experience built to convert, with performance and clarity as the priority.",
-    stack: ["React", "Tailwind", "Node", "Express", "MongoDB"],
-    image: "/images/work/ai-gen-ai.png",
+      "A website built in one month for a construction chemicals manufacturer with no prior digital presence - giving them their first online storefront for leads and brand credibility.",
+    stack: ["React", "Tailwind"], // TODO: confirm exact stack - this was a lighter 1-month build
+    image: "/images/work/vfixer-chemicals.png",
+  },
+  {
+    index: "04",
+    title: "VDesign",
+    href: "https://vdesign.co.in/login", 
+    tagline: "Multi-location fabric shop management with AI visualization",
+    description:
+      "A management system for a multi-location fabric business - QR-based inventory tracking across stores, plus an AI-powered fabric visualization tool for customers.",
+    stack: ["React", "Tailwind", "Node", "Express", "MongoDB"], // TODO: confirm AI/image-gen tooling used
+    image: "/images/work/vdesign.png",
   },
 ];
 
@@ -204,7 +215,7 @@ export const EXPERIENCE = [
     role: "Freelance Software Engineer",
     org: "Freelance",
     location: "Remote",
-    period: "July 2025 - Present",
+    period: "Dec 2024 - Sept 2025",
     current: false,
     points: [
       "Built and deployed full-stack apps using the MERN stack for diverse clients",
