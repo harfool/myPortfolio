@@ -26,6 +26,16 @@ const easeOutBack = (t: number) => {
   return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
 };
 
+// Measures the wrapping container (not the window) so the display size is
+// fully owned by CSS (max-width + aspect-ratio on that container). This only
+// figures out the canvas's internal drawing resolution for crispness.
+function computeCanvasSize(container: HTMLDivElement, gw: number) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const rect = container.getBoundingClientRect();
+  const px = Math.max(2, Math.floor((rect.width * dpr) / gw));
+  return { dpr, px };
+}
+
 export default function PixelLoader({
   onBuilt,
   contentReady,
@@ -33,8 +43,11 @@ export default function PixelLoader({
   onBuilt?: () => void;
   contentReady: boolean;
 }) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const onBuiltRef = useRef(onBuilt);
+  const pixelsRef = useRef<Pixel[]>([]);
+  const builtRef = useRef(false);
   const [built, setBuilt] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const waiting = built && !contentReady && !reducedMotion;
@@ -44,8 +57,9 @@ export default function PixelLoader({
   }, [onBuilt]);
 
   useEffect(() => {
+    const container = containerRef.current;
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!container || !canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) {
       const t = setTimeout(() => onBuiltRef.current?.(), 400);
@@ -75,21 +89,34 @@ export default function PixelLoader({
       }
     }
     pixels.sort((a, b) => a.start - b.start);
+    pixelsRef.current = pixels;
     const lastFinish = Math.max(...pixels.map((p) => p.start + p.dur));
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const boxW = window.innerWidth * 0.82;
-    const boxH = window.innerHeight * 0.72;
-    const px = Math.max(
-      2,
-      Math.floor(Math.min((boxW * dpr) / gw, (boxH * dpr) / gh)),
-    );
-    canvas.width = px * gw;
-    canvas.height = px * gh;
-    canvas.style.width = `${Math.round(canvas.width / dpr)}px`;
-    canvas.style.height = `${Math.round(canvas.height / dpr)}px`;
+    const applySize = () => {
+      const { dpr, px } = computeCanvasSize(container, gw);
+      canvas.width = px * gw;
+      canvas.height = px * gh;
+      return px;
+    };
 
+    let px = applySize();
     ctx.fillStyle = "#000";
+
+    const redrawComplete = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const p of pixelsRef.current) {
+        ctx.fillRect(p.x * px, p.y * px, px, px);
+      }
+    };
+
+    const handleResize = () => {
+      px = applySize();
+      ctx.fillStyle = "#000";
+      if (builtRef.current) redrawComplete();
+    };
+
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(container);
 
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
@@ -97,12 +124,16 @@ export default function PixelLoader({
     setReducedMotion(prefersReduced);
 
     if (prefersReduced) {
-      for (const p of pixels) ctx.fillRect(p.x * px, p.y * px, px, px);
+      redrawComplete();
       const t = setTimeout(() => {
+        builtRef.current = true;
         setBuilt(true);
         onBuiltRef.current?.();
       }, 400);
-      return () => clearTimeout(t);
+      return () => {
+        clearTimeout(t);
+        resizeObserver.disconnect();
+      };
     }
 
     let raf = 0;
@@ -113,7 +144,7 @@ export default function PixelLoader({
       const elapsed = now - t0;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      for (const p of pixels) {
+      for (const p of pixelsRef.current) {
         if (p.start > elapsed) break;
         const t = Math.min((elapsed - p.start) / p.dur, 1);
         const s = Math.max(1, Math.round(px * easeOutBack(t)));
@@ -123,8 +154,8 @@ export default function PixelLoader({
 
       if (!finished && elapsed >= lastFinish + 90) {
         finished = true;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (const p of pixels) ctx.fillRect(p.x * px, p.y * px, px, px);
+        redrawComplete();
+        builtRef.current = true;
         setBuilt(true);
         setTimeout(() => onBuiltRef.current?.(), DONE_DELAY);
         return;
@@ -133,21 +164,29 @@ export default function PixelLoader({
     };
 
     raf = requestAnimationFrame(frame);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      resizeObserver.disconnect();
+    };
   }, []);
 
   return (
-    <motion.canvas
-      ref={canvasRef}
-      aria-hidden="true"
-      role="presentation"
-      className="block"
-      animate={waiting ? { opacity: [1, 0.82, 1] } : { opacity: 1 }}
-      transition={
-        waiting
-          ? { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
-          : { duration: 0.2 }
-      }
-    />
+    <div
+      ref={containerRef}
+      className="aspect-[70/79] w-[55vw] max-w-[200px] sm:max-w-[260px] md:max-w-[340px] lg:max-w-[520px]"
+    >
+      <motion.canvas
+        ref={canvasRef}
+        aria-hidden="true"
+        role="presentation"
+        className="block h-full w-full"
+        animate={waiting ? { opacity: [1, 0.82, 1] } : { opacity: 1 }}
+        transition={
+          waiting
+            ? { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
+            : { duration: 0.2 }
+        }
+      />
+    </div>
   );
 }
