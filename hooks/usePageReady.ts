@@ -69,9 +69,14 @@ function timeoutFallback(ms: number, signal: AbortSignal): Promise<void> {
   });
 }
 
-export function usePageReady(minimumMs = 2800, maxWaitMs = 6000) {
-  const [isReady, setIsReady] = useState(false);
+export function usePageReady(
+  minimumMs = 2800,
+  maxWaitMs = 6000,
+  animationDone = false,
+) {
+  const [minimumElapsed, setMinimumElapsed] = useState(false);
   const [contentReady, setContentReady] = useState(false);
+  const isReady = minimumElapsed && contentReady && animationDone;
 
   useEffect(() => {
     let cancelled = false;
@@ -99,8 +104,8 @@ export function usePageReady(minimumMs = 2800, maxWaitMs = 6000) {
       if (!cancelled) setContentReady(true);
     });
 
-    Promise.all([minimumTimer, contentReadyPromise]).then(() => {
-      if (!cancelled) setIsReady(true);
+    minimumTimer.then(() => {
+      if (!cancelled) setMinimumElapsed(true);
     });
 
     return () => {

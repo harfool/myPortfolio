@@ -35,16 +35,22 @@ export default function PixelLoader({
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const onBuiltRef = useRef(onBuilt);
-  onBuiltRef.current = onBuilt;
   const [built, setBuilt] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const waiting = built && !contentReady && !reducedMotion;
 
   useEffect(() => {
+    onBuiltRef.current = onBuilt;
+  }, [onBuilt]);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) {
+      const t = setTimeout(() => onBuiltRef.current?.(), 400);
+      return () => clearTimeout(t);
+    }
 
     const gh = PIXEL_GRID.length;
     const gw = PIXEL_GRID[0].length;
@@ -92,8 +98,10 @@ export default function PixelLoader({
 
     if (prefersReduced) {
       for (const p of pixels) ctx.fillRect(p.x * px, p.y * px, px, px);
-      setBuilt(true);
-      const t = setTimeout(() => onBuiltRef.current?.(), 400);
+      const t = setTimeout(() => {
+        setBuilt(true);
+        onBuiltRef.current?.();
+      }, 400);
       return () => clearTimeout(t);
     }
 

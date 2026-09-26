@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePageReady } from "@/hooks/usePageReady";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -17,9 +15,9 @@ import ScrollToTop from "@/components/ScrollToTop";
 import BigStatementReveal from "@/components/BigStatementReveal";
 
 export default function Home() {
-  const { isReady, contentReady } = usePageReady(2800);
-  const isLoading = !isReady;
   const [animationDone, setAnimationDone] = useState(false);
+  const { isReady, contentReady } = usePageReady(2800, 6000, animationDone);
+  const isLoading = !isReady;
 
   useEffect(() => {
     document.body.style.overflow = isLoading ? "hidden" : "";
