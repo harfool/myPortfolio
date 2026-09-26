@@ -106,141 +106,143 @@ export default function About() {
       id="about"
       className="scroll-mt-20 overflow-x-clip bg-white px-6 py-10 text-black sm:px-10 lg:scroll-mt-26 lg:px-16 lg:pb-20 lg:pt-4"
     >
-      <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-        className="mx-auto max-w-6xl"
-      >
-        {/* Eyebrow + huge heading */}
+      <div className="mx-auto max-w-6xl">
         <motion.div
-          variants={fadeUp}
-          className="flex items-baseline justify-between gap-4"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <span className="font-mono text-xs uppercase tracking-[0.3em] text-black/60">
-            01 / About
-          </span>
-          <span className="hidden font-mono text-xs uppercase tracking-[0.3em] text-black/60 sm:inline">
-            Bhilwara, Rajasthan, India
-          </span>
-        </motion.div>
-
-        <motion.h2
-          variants={fadeUpScale}
-          className="mt-6 text-4xl font-black uppercase leading-[0.9] tracking-tight sm:text-5xl lg:text-6xl"
-        >
-          Founder.
-          <br />
-          Frontend
-          <br />
-          Engineer.
-        </motion.h2>
-
-        <motion.p
-          variants={fadeUp}
-          className="mt-8 max-w-2xl text-lg leading-relaxed text-black/70 sm:text-xl"
-        >
-          I design and build performance-first React applications, turning rough
-          ideas and Figma files into fast, modular products - with a bias toward
-          clean architecture over shortcuts.
-        </motion.p>
-
-        {/* Stats strip */}
-        <motion.div
-          variants={staggerFast}
-          className="mt-14 grid grid-cols-2 gap-px overflow-hidden border border-black bg-black sm:grid-cols-4"
-        >
-          {STATS.map((stat) => (
-            <motion.div
-              key={stat.label}
-              variants={fadeUpScale}
-              className="bg-white p-6"
-            >
-              <CountUp value={stat.value} />
-              <p className="mt-1 text-xs text-black/60 sm:text-sm">
-                {stat.label}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Two-column: journey + focus / availability */}
-        <div className="mt-14 grid gap-px overflow-hidden border border-black bg-black lg:grid-cols-[1.4fr_1fr]">
-          <motion.div variants={fadeUp} className="bg-white p-8 sm:p-10">
-            <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-black/60">
-              My journey
-            </h3>
-            <p className="mt-4 text-base leading-relaxed text-black/80 sm:text-lg">
-              Started freelancing in mid-2025, building production React apps
-              for small teams and founders. Since then I&apos;ve shipped 20+
-              projects, cut load times by ~40% through memoization and
-              code-splitting, and picked up Node, PostgreSQL, and Prisma along
-              the way to ship full-stack when a project calls for it.
-            </p>
-            <motion.div
-              variants={staggerFast}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.6 }}
-              className="mt-8 flex flex-wrap gap-2"
-            >
-              {FOCUS_AREAS.map((area) => (
-                <motion.span
-                  key={area}
-                  variants={chip}
-                  className="rounded-full border border-black px-4 py-2 text-xs font-medium sm:text-sm"
-                >
-                  {area}
-                </motion.span>
-              ))}
-            </motion.div>
-          </motion.div>
-
+          {/* Eyebrow + huge heading */}
           <motion.div
             variants={fadeUp}
-            className="flex flex-col justify-between bg-black p-8 text-white sm:p-10"
+            className="flex items-baseline justify-between gap-4"
           >
-            <div>
-              <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-white/60">
-                Status
+            <span className="font-mono text-xs uppercase tracking-[0.3em] text-black/60">
+              01 / About
+            </span>
+            <span className="hidden font-mono text-xs uppercase tracking-[0.3em] text-black/60 sm:inline">
+              Bhilwara, Rajasthan, India
+            </span>
+          </motion.div>
+
+          <motion.h2
+            variants={fadeUpScale}
+            className="mt-6 text-4xl font-black uppercase leading-[0.9] tracking-tight sm:text-5xl lg:text-6xl"
+          >
+            Founder.
+            <br />
+            Frontend
+            <br />
+            Engineer.
+          </motion.h2>
+
+          <motion.p
+            variants={fadeUp}
+            className="mt-8 max-w-2xl text-lg leading-relaxed text-black/70 sm:text-xl"
+          >
+            I design and build performance-first React applications, turning
+            rough ideas and Figma files into fast, modular products - with a
+            bias toward clean architecture over shortcuts.
+          </motion.p>
+
+          {/* Stats strip */}
+          <motion.div
+            variants={staggerFast}
+            className="mt-14 grid grid-cols-2 gap-px overflow-hidden border border-black bg-black sm:grid-cols-4"
+          >
+            {STATS.map((stat) => (
+              <motion.div
+                key={stat.label}
+                variants={fadeUpScale}
+                className="bg-white p-6"
+              >
+                <CountUp value={stat.value} />
+                <p className="mt-1 text-xs text-black/60 sm:text-sm">
+                  {stat.label}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Two-column: journey + focus / availability */}
+          <div className="mt-14 grid gap-px overflow-hidden border border-black bg-black lg:grid-cols-[1.4fr_1fr]">
+            <motion.div variants={fadeUp} className="bg-white p-8 sm:p-10">
+              <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-black/60">
+                My journey
               </h3>
-              <div className="mt-4 flex items-center gap-2">
-                <motion.span
-                  initial={{ scale: 0.6, opacity: 0 }}
-                  whileInView={{
-                    scale: [0.6, 1.3, 1],
-                    opacity: 1,
-                    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-                  }}
-                  viewport={{ once: true, amount: 0.6 }}
-                  className="h-2.5 w-2.5 rounded-full bg-emerald-400"
-                />
-                <p className="text-lg font-bold sm:text-xl">
-                  Available for freelance
+              <p className="mt-4 text-base leading-relaxed text-black/80 sm:text-lg">
+                Started freelancing in mid-2025, building production React apps
+                for small teams and founders. Since then I&apos;ve shipped 20+
+                projects, cut load times by ~40% through memoization and
+                code-splitting, and picked up Node, PostgreSQL, and Prisma along
+                the way to ship full-stack when a project calls for it.
+              </p>
+              <motion.div
+                variants={staggerFast}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.6 }}
+                className="mt-8 flex flex-wrap gap-2"
+              >
+                {FOCUS_AREAS.map((area) => (
+                  <motion.span
+                    key={area}
+                    variants={chip}
+                    className="rounded-full border border-black px-4 py-2 text-xs font-medium sm:text-sm"
+                  >
+                    {area}
+                  </motion.span>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              variants={fadeUp}
+              className="flex flex-col justify-between bg-black p-8 text-white sm:p-10"
+            >
+              <div>
+                <h3 className="font-mono text-xs uppercase tracking-[0.24em] text-white/60">
+                  Status
+                </h3>
+                <div className="mt-4 flex items-center gap-2">
+                  <motion.span
+                    initial={{ scale: 0.6, opacity: 0 }}
+                    whileInView={{
+                      scale: [0.6, 1.3, 1],
+                      opacity: 1,
+                      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+                    }}
+                    viewport={{ once: true, amount: 0.6 }}
+                    className="h-2.5 w-2.5 rounded-full bg-emerald-400"
+                  />
+                  <p className="text-lg font-bold sm:text-xl">
+                    Available for freelance
+                  </p>
+                </div>
+                <p className="mt-3 text-sm text-white/60">
+                  Open to new projects starting immediately. Based in India,
+                  working with clients worldwide.
                 </p>
               </div>
-              <p className="mt-3 text-sm text-white/60">
-                Open to new projects starting immediately. Based in India,
-                working with clients worldwide.
-              </p>
-            </div>
-            <motion.a
-              href="#contact"
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.96 }}
-              className="mt-10 inline-flex w-fit items-center gap-1 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5"
-            >
-              Let&apos;s talk ↗
-            </motion.a>
-          </motion.div>
-        </div>
+              <motion.a
+                href="#contact"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.96 }}
+                className="mt-10 inline-flex w-fit items-center gap-1 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5"
+              >
+                Let&apos;s talk ↗
+              </motion.a>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
 
-        {/* ── Tech stack  */}
-        <div className="relative left-1/2 mt-14 w-screen -translate-x-1/2">
-          <TechStackWave />
-        </div>
-      </motion.div>
+      {/* ── Tech stack — outside the whileInView wrapper; it's already
+           scroll-driven internally and shouldn't gate on its own height */}
+      <div className="relative left-1/2 mt-14 w-screen -translate-x-1/2">
+        <TechStackWave />
+      </div>
     </section>
   );
 }

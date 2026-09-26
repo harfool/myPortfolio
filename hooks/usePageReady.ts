@@ -71,6 +71,7 @@ function timeoutFallback(ms: number, signal: AbortSignal): Promise<void> {
 
 export function usePageReady(minimumMs = 2800, maxWaitMs = 6000) {
   const [isReady, setIsReady] = useState(false);
+  const [contentReady, setContentReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -85,7 +86,7 @@ export function usePageReady(minimumMs = 2800, maxWaitMs = 6000) {
       );
     });
 
-    const contentReady = Promise.race([
+    const contentReadyPromise = Promise.race([
       Promise.all([
         waitForWindowLoad(controller.signal),
         waitForImages(controller.signal),
@@ -94,7 +95,11 @@ export function usePageReady(minimumMs = 2800, maxWaitMs = 6000) {
       timeoutFallback(maxWaitMs, controller.signal),
     ]);
 
-    Promise.all([minimumTimer, contentReady]).then(() => {
+    contentReadyPromise.then(() => {
+      if (!cancelled) setContentReady(true);
+    });
+
+    Promise.all([minimumTimer, contentReadyPromise]).then(() => {
       if (!cancelled) setIsReady(true);
     });
 
@@ -104,5 +109,5 @@ export function usePageReady(minimumMs = 2800, maxWaitMs = 6000) {
     };
   }, [minimumMs, maxWaitMs]);
 
-  return isReady;
+  return { isReady, contentReady };
 }

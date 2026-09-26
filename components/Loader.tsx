@@ -1,13 +1,19 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { AnimatedGradient } from "@/components/ui/animated-gradient";
+import PixelLoader from "@/components/ui/PixelLoader";
 
 type LoaderProps = {
   isLoading: boolean;
+  contentReady: boolean;
+  onAnimationDone?: () => void;
 };
 
-export default function Loader({ isLoading }: LoaderProps) {
+export default function Loader({
+  isLoading,
+  contentReady,
+  onAnimationDone,
+}: LoaderProps) {
   return (
     <AnimatePresence>
       {isLoading && (
@@ -16,30 +22,9 @@ export default function Loader({ isLoading }: LoaderProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-white px-6"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-white"
         >
-          <div className="relative h-105 w-full max-w-2xl overflow-hidden rounded-xl border border-black/10 bg-white">
-            <AnimatedGradient
-              config={{
-                preset: "custom",
-                color1: "#0a0a12",
-                color2: "#1c2333",
-                color3: "#f4f4f6",
-                rotation: -45,
-                proportion: 60,
-                scale: 0.6,
-                speed: 15,
-                distortion: 40,
-                swirl: 80,
-                swirlIterations: 10,
-                softness: 100,
-                offset: 200,
-                shape: "Edge",
-                shapeSize: 50,
-              }}
-              radius="12px"
-            />
-          </div>
+          <PixelLoader onBuilt={onAnimationDone} contentReady={contentReady} />
         </motion.div>
       )}
     </AnimatePresence>
